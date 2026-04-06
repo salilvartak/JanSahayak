@@ -1,0 +1,650 @@
+2026-04-03T05:28:21.5634070Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:28:22.5039460Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:28:31.0838136Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:28:31.0841712Z Container start method called.
+2026-04-03T05:28:31.0842677Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:28:31.0843973Z Establishing network.
+2026-04-03T05:28:31.0850438Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:31:29.7250299Z Image jansahayakacr.azurecr.io/jansahayak-api:latest is pulled from registry jansahayakacr.azurecr.io
+2026-04-03T05:31:29.7251585Z Container is starting.
+2026-04-03T05:31:29.7476549Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:31:29.7480947Z Establishing user namespace if not established already.
+2026-04-03T05:31:29.7481923Z Establishing network if not established already.
+2026-04-03T05:31:29.7483182Z Mounting volumes.
+2026-04-03T05:31:29.7485091Z Nested mountpoint volatile/logs
+2026-04-03T05:31:29.7502990Z Nested mountpoint 
+2026-04-03T05:31:29.7925586Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:31:29.7927663Z Creating container.
+2026-04-03T05:31:29.7928618Z Creating pipes for streaming container io.
+2026-04-03T05:31:29.7929404Z Creating stdout named pipe at /podr/container/pipe/3c72bd415061_jansahayak-api/stdout_98c33f5960c148c1946e24a8e2b2b0f8.
+2026-04-03T05:31:29.8010695Z Successfully created stdout named pipe at: /podr/container/pipe/3c72bd415061_jansahayak-api/stdout_98c33f5960c148c1946e24a8e2b2b0f8.
+2026-04-03T05:31:29.8011755Z Opening named pipe /podr/container/pipe/3c72bd415061_jansahayak-api/stdout_98c33f5960c148c1946e24a8e2b2b0f8 for reading in non-blocking mode.
+2026-04-03T05:31:29.8012762Z Successfully opened named pipe: /podr/container/pipe/3c72bd415061_jansahayak-api/stdout_98c33f5960c148c1946e24a8e2b2b0f8.
+2026-04-03T05:31:29.8013557Z Successfully removed non-blocking flag from /podr/container/pipe/3c72bd415061_jansahayak-api/stdout_98c33f5960c148c1946e24a8e2b2b0f8.
+2026-04-03T05:31:29.8015199Z Creating stderr named pipe at /podr/container/pipe/3c72bd415061_jansahayak-api/stderr_5cec1177f61c48ea9545b8e7092f3d38.
+2026-04-03T05:31:29.8016415Z Successfully created stderr named pipe at: /podr/container/pipe/3c72bd415061_jansahayak-api/stderr_5cec1177f61c48ea9545b8e7092f3d38.
+2026-04-03T05:31:29.8017384Z Opening named pipe /podr/container/pipe/3c72bd415061_jansahayak-api/stderr_5cec1177f61c48ea9545b8e7092f3d38 for reading in non-blocking mode.
+2026-04-03T05:31:29.8018406Z Successfully opened named pipe: /podr/container/pipe/3c72bd415061_jansahayak-api/stderr_5cec1177f61c48ea9545b8e7092f3d38.
+2026-04-03T05:31:29.8019093Z Successfully removed non-blocking flag from /podr/container/pipe/3c72bd415061_jansahayak-api/stderr_5cec1177f61c48ea9545b8e7092f3d38.
+2026-04-03T05:31:29.8020222Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:31:30.2457753Z Starting container: 3c72bd415061_jansahayak-api.
+2026-04-03T05:31:30.2870616Z Starting watchers and probes.
+2026-04-03T05:31:30.2964470Z Starting metrics collection.
+2026-04-03T05:31:30.2972527Z Container is running.
+2026-04-03T05:31:30.2974804Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:31:30.3374383Z Container start method finished after 179253 ms.
+2026-04-03T05:31:30.3380062Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:31:30.3385149Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:31:32.8590633Z Container has finished running with exit code: 1.
+2026-04-03T05:31:32.8664775Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:31:32.8675579Z Stop and delete container. Retry count = 0
+2026-04-03T05:31:32.8680978Z Stopping container: 3c72bd415061_jansahayak-api.
+2026-04-03T05:31:32.9040824Z Deleting container: 3c72bd415061_jansahayak-api. Retry count = 0
+2026-04-03T05:31:33.2747614Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:31:33.2785593Z Container is terminated. Total time elapsed: 408 ms.
+2026-04-03T05:31:33.2787174Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:31:33.2854783Z State: Stopping, Action: CancellingStartup, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:33.3009624Z Site startup probe failed after 2.9204048 seconds.
+2026-04-03T05:31:33.4120381Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:33.4305129Z Failed to start site. Revert by stopping site.
+2026-04-03T05:31:33.4311680Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:33.4452444Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:33.4453759Z Site: jansahayak-api stopped.
+2026-04-03T05:31:33.4507512Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:34.1171039Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:31:34.1173946Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:34.1751111Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:34.3270309Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:31:34.4991523Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:31:39.8833182Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:31:41.4990594Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:31:48.1708062Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:31:48.1709145Z Container start method called.
+2026-04-03T05:31:48.1709641Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:31:48.1710451Z Establishing network.
+2026-04-03T05:31:48.1711330Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:31:48.9296004Z Container is starting.
+2026-04-03T05:31:48.9297104Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:31:48.9306056Z Establishing user namespace if not established already.
+2026-04-03T05:31:48.9306956Z Establishing network if not established already.
+2026-04-03T05:31:48.9307963Z Mounting volumes.
+2026-04-03T05:31:48.9309645Z Nested mountpoint volatile/logs
+2026-04-03T05:31:48.9464688Z Nested mountpoint 
+2026-04-03T05:31:48.9605938Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:31:48.9607394Z Creating container.
+2026-04-03T05:31:48.9608498Z Creating pipes for streaming container io.
+2026-04-03T05:31:48.9609554Z Creating stdout named pipe at /podr/container/pipe/ab2ff7101995_jansahayak-api/stdout_b6a23b296fbf4cf1a3e5b1821faa5c0e.
+2026-04-03T05:31:48.9611623Z Successfully created stdout named pipe at: /podr/container/pipe/ab2ff7101995_jansahayak-api/stdout_b6a23b296fbf4cf1a3e5b1821faa5c0e.
+2026-04-03T05:31:48.9612753Z Opening named pipe /podr/container/pipe/ab2ff7101995_jansahayak-api/stdout_b6a23b296fbf4cf1a3e5b1821faa5c0e for reading in non-blocking mode.
+2026-04-03T05:31:48.9784310Z Successfully opened named pipe: /podr/container/pipe/ab2ff7101995_jansahayak-api/stdout_b6a23b296fbf4cf1a3e5b1821faa5c0e.
+2026-04-03T05:31:48.9786337Z Successfully removed non-blocking flag from /podr/container/pipe/ab2ff7101995_jansahayak-api/stdout_b6a23b296fbf4cf1a3e5b1821faa5c0e.
+2026-04-03T05:31:48.9838210Z Creating stderr named pipe at /podr/container/pipe/ab2ff7101995_jansahayak-api/stderr_faf32e4e697140d0b9ea1f69432ab54e.
+2026-04-03T05:31:48.9840485Z Successfully created stderr named pipe at: /podr/container/pipe/ab2ff7101995_jansahayak-api/stderr_faf32e4e697140d0b9ea1f69432ab54e.
+2026-04-03T05:31:48.9841313Z Opening named pipe /podr/container/pipe/ab2ff7101995_jansahayak-api/stderr_faf32e4e697140d0b9ea1f69432ab54e for reading in non-blocking mode.
+2026-04-03T05:31:48.9842222Z Successfully opened named pipe: /podr/container/pipe/ab2ff7101995_jansahayak-api/stderr_faf32e4e697140d0b9ea1f69432ab54e.
+2026-04-03T05:31:48.9843003Z Successfully removed non-blocking flag from /podr/container/pipe/ab2ff7101995_jansahayak-api/stderr_faf32e4e697140d0b9ea1f69432ab54e.
+2026-04-03T05:31:48.9853236Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:31:49.2907175Z Starting container: ab2ff7101995_jansahayak-api.
+2026-04-03T05:31:49.3311014Z Starting watchers and probes.
+2026-04-03T05:31:49.3315370Z Starting metrics collection.
+2026-04-03T05:31:49.3323483Z Container is running.
+2026-04-03T05:31:49.3326116Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:31:49.4234268Z Container start method finished after 1252 ms.
+2026-04-03T05:31:49.4236024Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:31:49.4236249Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:31:51.6270508Z Container has finished running with exit code: 1.
+2026-04-03T05:31:51.6271665Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:31:51.6275244Z Stop and delete container. Retry count = 0
+2026-04-03T05:31:51.6276226Z Stopping container: ab2ff7101995_jansahayak-api.
+2026-04-03T05:31:51.6742675Z Deleting container: ab2ff7101995_jansahayak-api. Retry count = 0
+2026-04-03T05:31:51.8140670Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:31:51.8142221Z Container is terminated. Total time elapsed: 186 ms.
+2026-04-03T05:31:51.8143069Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:31:51.8143851Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:51.8156180Z Site startup probe failed after 2.372885 seconds.
+2026-04-03T05:31:51.9300710Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:51.9312557Z Failed to start site. Revert by stopping site.
+2026-04-03T05:31:51.9314379Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:51.9505811Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:31:51.9506056Z Site: jansahayak-api stopped.
+2026-04-03T05:32:22.4814962Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:52 (UTC), DetailsLevel: WARN
+2026-04-03T05:32:23.5684896Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:52 (UTC), DetailsLevel: WARN
+2026-04-03T05:32:30.3391878Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:31:52 (UTC), DetailsLevel: WARN
+2026-04-03T05:32:30.3392995Z Container start method called.
+2026-04-03T05:32:30.3393439Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:32:30.3394274Z Establishing network.
+2026-04-03T05:32:30.3489801Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:32:30.4455974Z Container is starting.
+2026-04-03T05:32:30.4456927Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:32:30.4460151Z Establishing user namespace if not established already.
+2026-04-03T05:32:30.4461507Z Establishing network if not established already.
+2026-04-03T05:32:30.4462741Z Mounting volumes.
+2026-04-03T05:32:30.4464599Z Nested mountpoint volatile/logs
+2026-04-03T05:32:30.4591686Z Nested mountpoint 
+2026-04-03T05:32:30.5011459Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:32:30.5012447Z Creating container.
+2026-04-03T05:32:30.5013164Z Creating pipes for streaming container io.
+2026-04-03T05:32:30.5014006Z Creating stdout named pipe at /podr/container/pipe/1fa59c035c0e_jansahayak-api/stdout_956aa21f000a47deb41e667986923fbf.
+2026-04-03T05:32:30.5015576Z Successfully created stdout named pipe at: /podr/container/pipe/1fa59c035c0e_jansahayak-api/stdout_956aa21f000a47deb41e667986923fbf.
+2026-04-03T05:32:30.5016392Z Opening named pipe /podr/container/pipe/1fa59c035c0e_jansahayak-api/stdout_956aa21f000a47deb41e667986923fbf for reading in non-blocking mode.
+2026-04-03T05:32:30.5019234Z Successfully opened named pipe: /podr/container/pipe/1fa59c035c0e_jansahayak-api/stdout_956aa21f000a47deb41e667986923fbf.
+2026-04-03T05:32:30.5022684Z Successfully removed non-blocking flag from /podr/container/pipe/1fa59c035c0e_jansahayak-api/stdout_956aa21f000a47deb41e667986923fbf.
+2026-04-03T05:32:30.5024295Z Creating stderr named pipe at /podr/container/pipe/1fa59c035c0e_jansahayak-api/stderr_76e43f3dfb1b45149273a4b70f230d2d.
+2026-04-03T05:32:30.5025562Z Successfully created stderr named pipe at: /podr/container/pipe/1fa59c035c0e_jansahayak-api/stderr_76e43f3dfb1b45149273a4b70f230d2d.
+2026-04-03T05:32:30.5026262Z Opening named pipe /podr/container/pipe/1fa59c035c0e_jansahayak-api/stderr_76e43f3dfb1b45149273a4b70f230d2d for reading in non-blocking mode.
+2026-04-03T05:32:30.5482512Z Successfully opened named pipe: /podr/container/pipe/1fa59c035c0e_jansahayak-api/stderr_76e43f3dfb1b45149273a4b70f230d2d.
+2026-04-03T05:32:30.5483646Z Successfully removed non-blocking flag from /podr/container/pipe/1fa59c035c0e_jansahayak-api/stderr_76e43f3dfb1b45149273a4b70f230d2d.
+2026-04-03T05:32:30.5485263Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:32:30.8789571Z Starting container: 1fa59c035c0e_jansahayak-api.
+2026-04-03T05:32:30.9162009Z Starting watchers and probes.
+2026-04-03T05:32:30.9165651Z Starting metrics collection.
+2026-04-03T05:32:30.9167444Z Container is running.
+2026-04-03T05:32:30.9168188Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:32:30.9542081Z Container start method finished after 614 ms.
+2026-04-03T05:32:30.9546415Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:32:30.9546950Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:32:33.2179860Z Container has finished running with exit code: 1.
+2026-04-03T05:32:33.2181375Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:32:33.2184892Z Stop and delete container. Retry count = 0
+2026-04-03T05:32:33.2185710Z Stopping container: 1fa59c035c0e_jansahayak-api.
+2026-04-03T05:32:33.2536314Z Deleting container: 1fa59c035c0e_jansahayak-api. Retry count = 0
+2026-04-03T05:32:33.3837679Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:32:33.3839096Z Container is terminated. Total time elapsed: 165 ms.
+2026-04-03T05:32:33.3840106Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:32:33.3840846Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:31:51, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.3851235Z Site startup probe failed after 2.4300562 seconds.
+2026-04-03T05:32:33.4837547Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.4911494Z Failed to start site. Revert by stopping site.
+2026-04-03T05:32:33.4913260Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.4919429Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.4919618Z Site: jansahayak-api stopped.
+2026-04-03T05:32:33.4993977Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.9454197Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:32:33.9456571Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:33.9851199Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:34.1555131Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:32:34.2579821Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:32:34.3792428Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:32:35.4731227Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:32:42.1795302Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:34 (UTC), DetailsLevel: ERR
+2026-04-03T05:32:42.1796329Z Container start method called.
+2026-04-03T05:32:42.1796735Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:32:42.1797559Z Establishing network.
+2026-04-03T05:32:42.1798465Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:32:42.2929718Z Container is starting.
+2026-04-03T05:32:42.2931138Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:32:42.2932329Z Establishing user namespace if not established already.
+2026-04-03T05:32:42.2933346Z Establishing network if not established already.
+2026-04-03T05:32:42.2934583Z Mounting volumes.
+2026-04-03T05:32:42.2936349Z Nested mountpoint volatile/logs
+2026-04-03T05:32:42.3010276Z Nested mountpoint 
+2026-04-03T05:32:42.3072843Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:32:42.3073692Z Creating container.
+2026-04-03T05:32:42.3074479Z Creating pipes for streaming container io.
+2026-04-03T05:32:42.3075199Z Creating stdout named pipe at /podr/container/pipe/810a38dbd6af_jansahayak-api/stdout_b9b808c0abb04361914c9d9aee67d52f.
+2026-04-03T05:32:42.3076666Z Successfully created stdout named pipe at: /podr/container/pipe/810a38dbd6af_jansahayak-api/stdout_b9b808c0abb04361914c9d9aee67d52f.
+2026-04-03T05:32:42.3077591Z Opening named pipe /podr/container/pipe/810a38dbd6af_jansahayak-api/stdout_b9b808c0abb04361914c9d9aee67d52f for reading in non-blocking mode.
+2026-04-03T05:32:42.3078436Z Successfully opened named pipe: /podr/container/pipe/810a38dbd6af_jansahayak-api/stdout_b9b808c0abb04361914c9d9aee67d52f.
+2026-04-03T05:32:42.3079193Z Successfully removed non-blocking flag from /podr/container/pipe/810a38dbd6af_jansahayak-api/stdout_b9b808c0abb04361914c9d9aee67d52f.
+2026-04-03T05:32:42.3081084Z Creating stderr named pipe at /podr/container/pipe/810a38dbd6af_jansahayak-api/stderr_e9959f2474b345afb9d086bb6fa1e76c.
+2026-04-03T05:32:42.3082202Z Successfully created stderr named pipe at: /podr/container/pipe/810a38dbd6af_jansahayak-api/stderr_e9959f2474b345afb9d086bb6fa1e76c.
+2026-04-03T05:32:42.3082948Z Opening named pipe /podr/container/pipe/810a38dbd6af_jansahayak-api/stderr_e9959f2474b345afb9d086bb6fa1e76c for reading in non-blocking mode.
+2026-04-03T05:32:42.3083771Z Successfully opened named pipe: /podr/container/pipe/810a38dbd6af_jansahayak-api/stderr_e9959f2474b345afb9d086bb6fa1e76c.
+2026-04-03T05:32:42.3084505Z Successfully removed non-blocking flag from /podr/container/pipe/810a38dbd6af_jansahayak-api/stderr_e9959f2474b345afb9d086bb6fa1e76c.
+2026-04-03T05:32:42.3085435Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:32:42.8861673Z Starting container: 810a38dbd6af_jansahayak-api.
+2026-04-03T05:32:42.9611333Z Starting watchers and probes.
+2026-04-03T05:32:42.9615918Z Starting metrics collection.
+2026-04-03T05:32:42.9619337Z Container is running.
+2026-04-03T05:32:42.9621920Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:32:43.0312380Z Container start method finished after 851 ms.
+2026-04-03T05:32:43.0323498Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:32:43.0331400Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:32:45.3471281Z Container has finished running with exit code: 1.
+2026-04-03T05:32:45.3473391Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:32:45.3477001Z Stop and delete container. Retry count = 0
+2026-04-03T05:32:45.3478027Z Stopping container: 810a38dbd6af_jansahayak-api.
+2026-04-03T05:32:45.3856601Z Deleting container: 810a38dbd6af_jansahayak-api. Retry count = 0
+2026-04-03T05:32:45.4940157Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:32:45.4942181Z Container is terminated. Total time elapsed: 146 ms.
+2026-04-03T05:32:45.4944715Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:32:45.4947498Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:33, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:45.5223966Z Site startup probe failed after 2.4791473 seconds.
+2026-04-03T05:32:45.6142493Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:45.6157058Z Failed to start site. Revert by stopping site.
+2026-04-03T05:32:45.6159613Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:45.6234606Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:45.6235120Z Site: jansahayak-api stopped.
+2026-04-03T05:32:45.6392393Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:46.1080624Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:32:46.1082252Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:46.1380676Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:32:46.2807102Z Site: jansahayak-api will be blocked for 1 minutes till 04/03/2026 05:33:46
+2026-04-03T05:32:46.2808443Z State: Blocked, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site: jansahayak-api will be blocked for 1 minutes till 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:32:46.2890230Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:46 (UTC), DetailsLevel: WARN
+2026-04-03T05:32:46.4122739Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:32:46 (UTC), DetailsLevel: WARN
+2026-04-03T05:32:51.4435506Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:32:51.4435829Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:32:56.5336055Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:32:56.5336610Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:01.6279688Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:01.6280255Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:06.6649850Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:06.6650359Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:11.7213241Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:11.7213501Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:16.7823742Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:16.7824094Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:21.8473355Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:21.8473632Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:26.9344717Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:26.9344980Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:32.0223023Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:32.0224766Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:37.0820260Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:37.0820912Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:42.1848462Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:42.1849001Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:33:46.2815416Z Site: jansahayak-api is unblocked.
+2026-04-03T05:33:47.2756243Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:48.2503360Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:55.4850277Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:33:46, DetailsLevel: WARN
+2026-04-03T05:33:55.4851357Z Container start method called.
+2026-04-03T05:33:55.4851811Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:33:55.4852573Z Establishing network.
+2026-04-03T05:33:55.4853474Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:33:55.7067088Z Container is starting.
+2026-04-03T05:33:55.7067997Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:33:55.7068792Z Establishing user namespace if not established already.
+2026-04-03T05:33:55.7069598Z Establishing network if not established already.
+2026-04-03T05:33:55.7070501Z Mounting volumes.
+2026-04-03T05:33:55.7072073Z Nested mountpoint volatile/logs
+2026-04-03T05:33:55.7154666Z Nested mountpoint 
+2026-04-03T05:33:55.7372896Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:33:55.7373914Z Creating container.
+2026-04-03T05:33:55.7374662Z Creating pipes for streaming container io.
+2026-04-03T05:33:55.7375364Z Creating stdout named pipe at /podr/container/pipe/9998f514d169_jansahayak-api/stdout_7404c62f414a47b0824283b211a8629e.
+2026-04-03T05:33:55.7376949Z Successfully created stdout named pipe at: /podr/container/pipe/9998f514d169_jansahayak-api/stdout_7404c62f414a47b0824283b211a8629e.
+2026-04-03T05:33:55.7556300Z Opening named pipe /podr/container/pipe/9998f514d169_jansahayak-api/stdout_7404c62f414a47b0824283b211a8629e for reading in non-blocking mode.
+2026-04-03T05:33:55.7558615Z Successfully opened named pipe: /podr/container/pipe/9998f514d169_jansahayak-api/stdout_7404c62f414a47b0824283b211a8629e.
+2026-04-03T05:33:55.7559882Z Successfully removed non-blocking flag from /podr/container/pipe/9998f514d169_jansahayak-api/stdout_7404c62f414a47b0824283b211a8629e.
+2026-04-03T05:33:55.7561707Z Creating stderr named pipe at /podr/container/pipe/9998f514d169_jansahayak-api/stderr_c3bdb0bda2d3433fb58d87d83ecb39ba.
+2026-04-03T05:33:55.7563544Z Successfully created stderr named pipe at: /podr/container/pipe/9998f514d169_jansahayak-api/stderr_c3bdb0bda2d3433fb58d87d83ecb39ba.
+2026-04-03T05:33:55.7564606Z Opening named pipe /podr/container/pipe/9998f514d169_jansahayak-api/stderr_c3bdb0bda2d3433fb58d87d83ecb39ba for reading in non-blocking mode.
+2026-04-03T05:33:55.7565845Z Successfully opened named pipe: /podr/container/pipe/9998f514d169_jansahayak-api/stderr_c3bdb0bda2d3433fb58d87d83ecb39ba.
+2026-04-03T05:33:55.7579645Z Successfully removed non-blocking flag from /podr/container/pipe/9998f514d169_jansahayak-api/stderr_c3bdb0bda2d3433fb58d87d83ecb39ba.
+2026-04-03T05:33:55.8079893Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:33:56.2102781Z Starting container: 9998f514d169_jansahayak-api.
+2026-04-03T05:33:56.2504388Z Starting watchers and probes.
+2026-04-03T05:33:56.2522630Z Starting metrics collection.
+2026-04-03T05:33:56.2527208Z Container is running.
+2026-04-03T05:33:56.2530318Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:33:56.2810404Z Container start method finished after 795 ms.
+2026-04-03T05:33:56.2811859Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:33:56.2812135Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:33:58.4941757Z Container has finished running with exit code: 1.
+2026-04-03T05:33:58.4942948Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:33:58.4946276Z Stop and delete container. Retry count = 0
+2026-04-03T05:33:58.4947140Z Stopping container: 9998f514d169_jansahayak-api.
+2026-04-03T05:33:58.5400634Z Deleting container: 9998f514d169_jansahayak-api. Retry count = 0
+2026-04-03T05:33:58.6610309Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:33:58.6611711Z Container is terminated. Total time elapsed: 166 ms.
+2026-04-03T05:33:58.6612773Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:33:58.6613494Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:32:45, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:58.6794342Z Site startup probe failed after 2.3977778 seconds.
+2026-04-03T05:33:58.7961383Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:58.7971962Z Failed to start site. Revert by stopping site.
+2026-04-03T05:33:58.7972991Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:58.7975150Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:58.7975272Z Site: jansahayak-api stopped.
+2026-04-03T05:33:58.8141618Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:59.2865738Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:33:59.2866732Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:59.3265397Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:33:59.5448725Z Site: jansahayak-api will be blocked for 1 minutes till 04/03/2026 05:34:59
+2026-04-03T05:33:59.5450227Z State: Blocked, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site: jansahayak-api will be blocked for 1 minutes till 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:33:59.5452800Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:33:59 (UTC), DetailsLevel: WARN
+2026-04-03T05:33:59.6922707Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:33:59 (UTC), DetailsLevel: WARN
+2026-04-03T05:34:04.8110954Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:04.8111790Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:09.8734609Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:09.8734893Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:14.8952012Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:14.8952245Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:19.9730221Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:19.9730470Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:25.0069678Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:25.0069938Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:30.0700723Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:30.0701725Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:35.1280761Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:35.1281043Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:40.1873232Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:40.1873481Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:45.2508701Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:45.2508943Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:50.3104140Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:50.3104400Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:55.3771110Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:34:55.3771857Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:34:59.5433041Z Site: jansahayak-api is unblocked.
+2026-04-03T05:35:00.4445991Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:35:01.5023934Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:35:08.3873911Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:34:59, DetailsLevel: WARN
+2026-04-03T05:35:08.3876205Z Container start method called.
+2026-04-03T05:35:08.3876995Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:35:08.3883472Z Establishing network.
+2026-04-03T05:35:08.3887622Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:35:08.5602939Z Container is starting.
+2026-04-03T05:35:08.5603742Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:35:08.5604473Z Establishing user namespace if not established already.
+2026-04-03T05:35:08.5605242Z Establishing network if not established already.
+2026-04-03T05:35:08.5606207Z Mounting volumes.
+2026-04-03T05:35:08.5607530Z Nested mountpoint volatile/logs
+2026-04-03T05:35:08.5999512Z Nested mountpoint 
+2026-04-03T05:35:08.6695468Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:35:08.6696516Z Creating container.
+2026-04-03T05:35:08.6697643Z Creating pipes for streaming container io.
+2026-04-03T05:35:08.6698468Z Creating stdout named pipe at /podr/container/pipe/118eda4dc3f3_jansahayak-api/stdout_b5d4b0fd9b084ee7a7a3e9d6d20f69f1.
+2026-04-03T05:35:08.6700661Z Successfully created stdout named pipe at: /podr/container/pipe/118eda4dc3f3_jansahayak-api/stdout_b5d4b0fd9b084ee7a7a3e9d6d20f69f1.
+2026-04-03T05:35:08.6701396Z Opening named pipe /podr/container/pipe/118eda4dc3f3_jansahayak-api/stdout_b5d4b0fd9b084ee7a7a3e9d6d20f69f1 for reading in non-blocking mode.
+2026-04-03T05:35:08.6702373Z Successfully opened named pipe: /podr/container/pipe/118eda4dc3f3_jansahayak-api/stdout_b5d4b0fd9b084ee7a7a3e9d6d20f69f1.
+2026-04-03T05:35:08.6703117Z Successfully removed non-blocking flag from /podr/container/pipe/118eda4dc3f3_jansahayak-api/stdout_b5d4b0fd9b084ee7a7a3e9d6d20f69f1.
+2026-04-03T05:35:08.6711602Z Creating stderr named pipe at /podr/container/pipe/118eda4dc3f3_jansahayak-api/stderr_8adf37e76f494b719f13859c170544ba.
+2026-04-03T05:35:08.6713285Z Successfully created stderr named pipe at: /podr/container/pipe/118eda4dc3f3_jansahayak-api/stderr_8adf37e76f494b719f13859c170544ba.
+2026-04-03T05:35:08.6714034Z Opening named pipe /podr/container/pipe/118eda4dc3f3_jansahayak-api/stderr_8adf37e76f494b719f13859c170544ba for reading in non-blocking mode.
+2026-04-03T05:35:08.6715394Z Successfully opened named pipe: /podr/container/pipe/118eda4dc3f3_jansahayak-api/stderr_8adf37e76f494b719f13859c170544ba.
+2026-04-03T05:35:08.6716119Z Successfully removed non-blocking flag from /podr/container/pipe/118eda4dc3f3_jansahayak-api/stderr_8adf37e76f494b719f13859c170544ba.
+2026-04-03T05:35:08.6722131Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:35:09.1365552Z Starting container: 118eda4dc3f3_jansahayak-api.
+2026-04-03T05:35:09.1653479Z Starting watchers and probes.
+2026-04-03T05:35:09.1669651Z Starting metrics collection.
+2026-04-03T05:35:09.1752948Z Container is running.
+2026-04-03T05:35:09.1753792Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:35:09.2440821Z Container start method finished after 856 ms.
+2026-04-03T05:35:09.2445094Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:35:09.2446379Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:35:11.4519791Z Container has finished running with exit code: 1.
+2026-04-03T05:35:11.4520807Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:35:11.4523885Z Stop and delete container. Retry count = 0
+2026-04-03T05:35:11.4524887Z Stopping container: 118eda4dc3f3_jansahayak-api.
+2026-04-03T05:35:11.5009863Z Deleting container: 118eda4dc3f3_jansahayak-api. Retry count = 0
+2026-04-03T05:35:11.6208564Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:35:11.6212358Z Container is terminated. Total time elapsed: 168 ms.
+2026-04-03T05:35:11.6213838Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:35:11.6214874Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:33:58, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:11.6306798Z Site startup probe failed after 2.3856193 seconds.
+2026-04-03T05:35:11.7410538Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:11.7419862Z Failed to start site. Revert by stopping site.
+2026-04-03T05:35:11.7420993Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:11.7422902Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:11.7423023Z Site: jansahayak-api stopped.
+2026-04-03T05:35:11.7699129Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:12.2397622Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:35:12.2400595Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:12.2600385Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:35:12.3927168Z Site: jansahayak-api will be blocked for 2 minutes till 04/03/2026 05:37:12
+2026-04-03T05:35:12.3929834Z State: Blocked, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site: jansahayak-api will be blocked for 2 minutes till 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:12.3944467Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:35:12 (UTC), DetailsLevel: WARN
+2026-04-03T05:35:12.4747969Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:35:12 (UTC), DetailsLevel: WARN
+2026-04-03T05:35:17.5472344Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:17.5472614Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:22.6210689Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:22.6210955Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:27.6647981Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:27.6648224Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:32.8214927Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:32.8215398Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:37.8608459Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:37.8608701Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:42.9186260Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:42.9186506Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:47.9706087Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:47.9707088Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:53.0037282Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:53.0037534Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:35:58.0373964Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:35:58.0374228Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:03.0704402Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:03.0704666Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:08.1338658Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:08.1339270Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:13.1739219Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:13.1739454Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:18.2119660Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:18.2119999Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:23.2522077Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:23.2522709Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:28.2900813Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:28.2901073Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:33.3327510Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:33.3327777Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:38.5546139Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:38.5546542Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:43.5803526Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:43.5803781Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:48.6174910Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:48.6175156Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:53.6828809Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:53.6830076Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:36:58.7288000Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:36:58.7288241Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:03.9341192Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:37:03.9341466Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:08.9898491Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:37:08.9898965Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:12.3943744Z Site: jansahayak-api is unblocked.
+2026-04-03T05:37:14.1183844Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:37:15.5073749Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:37:22.0819064Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:37:12, DetailsLevel: WARN
+2026-04-03T05:37:22.0820198Z Container start method called.
+2026-04-03T05:37:22.0820649Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:37:22.0821484Z Establishing network.
+2026-04-03T05:37:22.0822437Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:37:22.2734345Z Container is starting.
+2026-04-03T05:37:22.2735077Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:37:22.2735841Z Establishing user namespace if not established already.
+2026-04-03T05:37:22.2736551Z Establishing network if not established already.
+2026-04-03T05:37:22.2784191Z Mounting volumes.
+2026-04-03T05:37:22.2786644Z Nested mountpoint volatile/logs
+2026-04-03T05:37:22.2965997Z Nested mountpoint 
+2026-04-03T05:37:22.3474387Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:37:22.3475453Z Creating container.
+2026-04-03T05:37:22.3476345Z Creating pipes for streaming container io.
+2026-04-03T05:37:22.3477114Z Creating stdout named pipe at /podr/container/pipe/557e0d88f342_jansahayak-api/stdout_f6cde35fad4646609e31733cd19dc7ad.
+2026-04-03T05:37:22.3479105Z Successfully created stdout named pipe at: /podr/container/pipe/557e0d88f342_jansahayak-api/stdout_f6cde35fad4646609e31733cd19dc7ad.
+2026-04-03T05:37:22.3479906Z Opening named pipe /podr/container/pipe/557e0d88f342_jansahayak-api/stdout_f6cde35fad4646609e31733cd19dc7ad for reading in non-blocking mode.
+2026-04-03T05:37:22.3480815Z Successfully opened named pipe: /podr/container/pipe/557e0d88f342_jansahayak-api/stdout_f6cde35fad4646609e31733cd19dc7ad.
+2026-04-03T05:37:22.3481586Z Successfully removed non-blocking flag from /podr/container/pipe/557e0d88f342_jansahayak-api/stdout_f6cde35fad4646609e31733cd19dc7ad.
+2026-04-03T05:37:22.3482812Z Creating stderr named pipe at /podr/container/pipe/557e0d88f342_jansahayak-api/stderr_bbae7fb911ad42b18098cbef75d5c870.
+2026-04-03T05:37:22.3486232Z Successfully created stderr named pipe at: /podr/container/pipe/557e0d88f342_jansahayak-api/stderr_bbae7fb911ad42b18098cbef75d5c870.
+2026-04-03T05:37:22.3488771Z Opening named pipe /podr/container/pipe/557e0d88f342_jansahayak-api/stderr_bbae7fb911ad42b18098cbef75d5c870 for reading in non-blocking mode.
+2026-04-03T05:37:22.3489989Z Successfully opened named pipe: /podr/container/pipe/557e0d88f342_jansahayak-api/stderr_bbae7fb911ad42b18098cbef75d5c870.
+2026-04-03T05:37:22.3490726Z Successfully removed non-blocking flag from /podr/container/pipe/557e0d88f342_jansahayak-api/stderr_bbae7fb911ad42b18098cbef75d5c870.
+2026-04-03T05:37:22.3662717Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:37:22.7598442Z Starting container: 557e0d88f342_jansahayak-api.
+2026-04-03T05:37:22.8181219Z Starting watchers and probes.
+2026-04-03T05:37:22.8192379Z Starting metrics collection.
+2026-04-03T05:37:22.8195818Z Container is running.
+2026-04-03T05:37:22.8271299Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:37:22.8767553Z Container start method finished after 784 ms.
+2026-04-03T05:37:22.8770083Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:37:22.8770378Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:37:25.0301544Z Container has finished running with exit code: 1.
+2026-04-03T05:37:25.0302840Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:37:25.0305972Z Stop and delete container. Retry count = 0
+2026-04-03T05:37:25.0306784Z Stopping container: 557e0d88f342_jansahayak-api.
+2026-04-03T05:37:25.0711093Z Deleting container: 557e0d88f342_jansahayak-api. Retry count = 0
+2026-04-03T05:37:25.2166433Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:37:25.2171748Z Container is terminated. Total time elapsed: 186 ms.
+2026-04-03T05:37:25.2175348Z Site container: jansahayak-api terminated during site startup.
+2026-04-03T05:37:25.2176255Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:35:11, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.2360500Z Site startup probe failed after 2.3584756 seconds.
+2026-04-03T05:37:25.3662856Z State: Stopping, Action: CancellingStartup, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.3844161Z Failed to start site. Revert by stopping site.
+2026-04-03T05:37:25.3846811Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.3849896Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.3850044Z Site: jansahayak-api stopped.
+2026-04-03T05:37:25.3949851Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.9458889Z Site container: jansahayak-api_managedIdentity terminated during site startup.
+2026-04-03T05:37:25.9463725Z State: Stopping, Action: UnmountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:25.9853602Z State: Stopping, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site container: jansahayak-api terminated during site startup. Cancelling site startup., DetailsLevel: ERR
+2026-04-03T05:37:26.1389120Z Site: jansahayak-api will be blocked for 2 minutes till 04/03/2026 05:39:26
+2026-04-03T05:37:26.1392576Z State: Blocked, Action: StoppingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site: jansahayak-api will be blocked for 2 minutes till 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:26.1397769Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:37:26 (UTC), DetailsLevel: WARN
+2026-04-03T05:37:26.3386937Z State: Stopped, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site stopped at 04/03/2026 05:37:26 (UTC), DetailsLevel: WARN
+2026-04-03T05:37:31.1980411Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:31.1980725Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:36.2363967Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:36.2379316Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:41.3059207Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:41.3059515Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:46.3586114Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:46.3587319Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:51.4528303Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:51.4528583Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:37:56.4910322Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:37:56.4910582Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:38:01.5880733Z State: Blocked, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:38:01.5882393Z Start site prohibitted because the site is being blocked.
+2026-04-03T05:39:26.1405141Z Site: jansahayak-api is unblocked.
+2026-04-03T05:43:13.8706419Z State: Starting, Action: EstablishingSiteNetworks, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:43:14.8535295Z State: Starting, Action: StartingMsiContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:43:21.6128750Z State: Starting, Action: StartingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site is blocked due to multiple, consecutive cold start failures. Site scheduled to be unblocked at 04/03/2026 05:39:26, DetailsLevel: WARN
+2026-04-03T05:43:21.6129904Z Container start method called.
+2026-04-03T05:43:21.6130352Z State: Starting, Action: PullingImage, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:43:21.6131154Z Establishing network.
+2026-04-03T05:43:21.6132057Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:46:11.0771957Z Image jansahayakacr.azurecr.io/jansahayak-api:latest is pulled from registry jansahayakacr.azurecr.io
+2026-04-03T05:46:11.0773338Z Container is starting.
+2026-04-03T05:46:11.0807076Z State: Starting, Action: MountingVolumes, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:46:11.0809616Z Establishing user namespace if not established already.
+2026-04-03T05:46:11.0810877Z Establishing network if not established already.
+2026-04-03T05:46:11.0812171Z Mounting volumes.
+2026-04-03T05:46:11.0815170Z Nested mountpoint volatile/logs
+2026-04-03T05:46:11.0923359Z Nested mountpoint 
+2026-04-03T05:46:11.1540838Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:46:11.1544405Z Creating container.
+2026-04-03T05:46:11.1545445Z Creating pipes for streaming container io.
+2026-04-03T05:46:11.1546604Z Creating stdout named pipe at /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stdout_829d87ff4b704efaa84b936347902cd1.
+2026-04-03T05:46:11.1634097Z Successfully created stdout named pipe at: /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stdout_829d87ff4b704efaa84b936347902cd1.
+2026-04-03T05:46:11.1635178Z Opening named pipe /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stdout_829d87ff4b704efaa84b936347902cd1 for reading in non-blocking mode.
+2026-04-03T05:46:11.1636183Z Successfully opened named pipe: /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stdout_829d87ff4b704efaa84b936347902cd1.
+2026-04-03T05:46:11.1636882Z Successfully removed non-blocking flag from /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stdout_829d87ff4b704efaa84b936347902cd1.
+2026-04-03T05:46:11.1638881Z Creating stderr named pipe at /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stderr_c27d1360cf5e4433b18d5fa880978cf6.
+2026-04-03T05:46:11.1640320Z Successfully created stderr named pipe at: /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stderr_c27d1360cf5e4433b18d5fa880978cf6.
+2026-04-03T05:46:11.1641084Z Opening named pipe /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stderr_c27d1360cf5e4433b18d5fa880978cf6 for reading in non-blocking mode.
+2026-04-03T05:46:11.1641935Z Successfully opened named pipe: /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stderr_c27d1360cf5e4433b18d5fa880978cf6.
+2026-04-03T05:46:11.1646962Z Successfully removed non-blocking flag from /podr/container/pipe/d40b7fdad5ff_jansahayak-api/stderr_c27d1360cf5e4433b18d5fa880978cf6.
+2026-04-03T05:46:11.1648659Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:46:11.6250284Z Starting container: d40b7fdad5ff_jansahayak-api.
+2026-04-03T05:46:11.6609747Z Starting watchers and probes.
+2026-04-03T05:46:11.6613492Z Starting metrics collection.
+2026-04-03T05:46:11.6614924Z Container is running.
+2026-04-03T05:46:11.6615526Z State: Starting, Action: CreatingContainer, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:46:11.7303917Z Container start method finished after 170117 ms.
+2026-04-03T05:46:11.7306390Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:46:11.7306922Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:46:33.7442876Z Site startup probe succeeded after 22.0128704 seconds.
+2026-04-03T05:46:33.8376423Z State: Starting, Action: WarmUpProbeSucceeded, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site startup probe succeeded after 22.0128704 seconds., DetailsLevel: INFO
+2026-04-03T05:46:34.0014018Z Site started.
+2026-04-03T05:46:34.0014986Z State: Started, Action: None, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site started at 04/03/2026 05:46:34 (UTC), DetailsLevel: INFO
+2026-04-03T05:46:34.1416474Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:46:36.7684898Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:46:46.3645743Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T05:46:46.3646895Z Container start method called.
+2026-04-03T05:46:46.3647294Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:46:46.3648109Z Establishing network.
+2026-04-03T05:46:46.3649051Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T05:46:46.6752590Z Container is starting.
+2026-04-03T05:46:46.6753337Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T05:46:46.6754310Z Establishing user namespace if not established already.
+2026-04-03T05:46:46.6755030Z Establishing network if not established already.
+2026-04-03T05:46:46.6755928Z Mounting volumes.
+2026-04-03T05:46:46.6757148Z Nested mountpoint volatile/logs
+2026-04-03T05:46:46.7254421Z Nested mountpoint 
+2026-04-03T05:46:46.8043703Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T05:46:46.8047350Z Creating container.
+2026-04-03T05:46:46.8049778Z Creating pipes for streaming container io.
+2026-04-03T05:46:46.8051837Z Creating stdout named pipe at /podr/container/pipe/695dee94eff4_jansahayak-api/stdout_1b523f3a5669493ba7f49b59e7b11fc4.
+2026-04-03T05:46:46.8055284Z Successfully created stdout named pipe at: /podr/container/pipe/695dee94eff4_jansahayak-api/stdout_1b523f3a5669493ba7f49b59e7b11fc4.
+2026-04-03T05:46:46.8057379Z Opening named pipe /podr/container/pipe/695dee94eff4_jansahayak-api/stdout_1b523f3a5669493ba7f49b59e7b11fc4 for reading in non-blocking mode.
+2026-04-03T05:46:46.8062910Z Successfully opened named pipe: /podr/container/pipe/695dee94eff4_jansahayak-api/stdout_1b523f3a5669493ba7f49b59e7b11fc4.
+2026-04-03T05:46:46.8066718Z Successfully removed non-blocking flag from /podr/container/pipe/695dee94eff4_jansahayak-api/stdout_1b523f3a5669493ba7f49b59e7b11fc4.
+2026-04-03T05:46:46.8265977Z Creating stderr named pipe at /podr/container/pipe/695dee94eff4_jansahayak-api/stderr_f7192da007ad442c9ef5c851fd38ed2e.
+2026-04-03T05:46:46.8270927Z Successfully created stderr named pipe at: /podr/container/pipe/695dee94eff4_jansahayak-api/stderr_f7192da007ad442c9ef5c851fd38ed2e.
+2026-04-03T05:46:46.8648312Z Opening named pipe /podr/container/pipe/695dee94eff4_jansahayak-api/stderr_f7192da007ad442c9ef5c851fd38ed2e for reading in non-blocking mode.
+2026-04-03T05:46:46.8659457Z Successfully opened named pipe: /podr/container/pipe/695dee94eff4_jansahayak-api/stderr_f7192da007ad442c9ef5c851fd38ed2e.
+2026-04-03T05:46:46.8662134Z Successfully removed non-blocking flag from /podr/container/pipe/695dee94eff4_jansahayak-api/stderr_f7192da007ad442c9ef5c851fd38ed2e.
+2026-04-03T05:46:46.8666547Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T05:46:48.2503711Z Starting container: 695dee94eff4_jansahayak-api.
+2026-04-03T05:46:48.2954332Z Starting watchers and probes.
+2026-04-03T05:46:48.3036940Z Starting metrics collection.
+2026-04-03T05:46:48.3042478Z Container is running.
+2026-04-03T05:46:48.3044057Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:46:48.3334203Z Container start method finished after 1968 ms.
+2026-04-03T05:46:48.3336548Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T05:46:48.3337012Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T05:47:14.3999494Z Site startup probe succeeded after 26.0654282 seconds.
+2026-04-03T05:47:14.6484538Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 26.0654282 seconds., DetailsLevel: INFO
+2026-04-03T05:47:15.2990966Z Site started.
+2026-04-03T05:47:15.2992501Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 04/03/2026 05:47:15 (UTC), DetailsLevel: INFO
+2026-04-03T05:47:35.3169036Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site started at 04/03/2026 05:46:34 (UTC), DetailsLevel: INFO
+2026-04-03T05:47:35.3172298Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site started at 04/03/2026 05:46:34 (UTC), DetailsLevel: INFO
+2026-04-03T05:47:35.3173287Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T05:47:35.3488400Z Stop and delete container. Retry count = 0
+2026-04-03T05:47:35.3489527Z Stopping container: d40b7fdad5ff_jansahayak-api.
+2026-04-03T05:47:39.9688541Z Deleting container: d40b7fdad5ff_jansahayak-api. Retry count = 0
+2026-04-03T05:47:40.1335277Z Container spec TerminationMessagePolicy  path 
+2026-04-03T05:47:40.1336801Z Container is terminated. Total time elapsed: 4816 ms.
+2026-04-03T05:47:40.1345163Z Site: jansahayak-api stopped.
+2026-04-03T06:57:11.7819995Z State: Starting, Action: EstablishingSiteNetworks, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T06:57:15.2969071Z State: Starting, Action: StartingMsiContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T06:57:26.7534477Z State: Starting, Action: StartingSiteContainers, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: , DetailsLevel: INFO
+2026-04-03T06:57:26.7535719Z Container start method called.
+2026-04-03T06:57:26.7536181Z State: Starting, Action: PullingImage, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pulling image jansahayakacr.azurecr.io/jansahayak-api:latest for jansahayak-api., DetailsLevel: INFO
+2026-04-03T06:57:26.7536955Z Establishing network.
+2026-04-03T06:57:26.7555534Z Pulling image: jansahayakacr.azurecr.io/jansahayak-api:latest.
+2026-04-03T07:00:37.5388683Z Image jansahayakacr.azurecr.io/jansahayak-api:latest is pulled from registry jansahayakacr.azurecr.io
+2026-04-03T07:00:37.5389862Z Container is starting.
+2026-04-03T07:00:37.5390851Z State: Starting, Action: MountingVolumes, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Mounting volumes for jansahayak-api., DetailsLevel: INFO
+2026-04-03T07:00:37.5391628Z Establishing user namespace if not established already.
+2026-04-03T07:00:37.5392448Z Establishing network if not established already.
+2026-04-03T07:00:37.5398021Z Mounting volumes.
+2026-04-03T07:00:37.5400714Z Nested mountpoint volatile/logs
+2026-04-03T07:00:37.5891146Z Nested mountpoint 
+2026-04-03T07:00:37.6796233Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Finished pulling container image and mounting volumes for jansahayak-api. Allocatinng the rest of the container resources to finish container creation., DetailsLevel: INFO
+2026-04-03T07:00:37.6797291Z Creating container.
+2026-04-03T07:00:37.6911825Z Creating pipes for streaming container io.
+2026-04-03T07:00:37.6986516Z Creating stdout named pipe at /podr/container/pipe/731ed521d8a6_jansahayak-api/stdout_5a2b74c5fb1549ee8d4b19f5b414ec16.
+2026-04-03T07:00:37.7011330Z Successfully created stdout named pipe at: /podr/container/pipe/731ed521d8a6_jansahayak-api/stdout_5a2b74c5fb1549ee8d4b19f5b414ec16.
+2026-04-03T07:00:37.7012570Z Opening named pipe /podr/container/pipe/731ed521d8a6_jansahayak-api/stdout_5a2b74c5fb1549ee8d4b19f5b414ec16 for reading in non-blocking mode.
+2026-04-03T07:00:37.7014377Z Successfully opened named pipe: /podr/container/pipe/731ed521d8a6_jansahayak-api/stdout_5a2b74c5fb1549ee8d4b19f5b414ec16.
+2026-04-03T07:00:37.7015319Z Successfully removed non-blocking flag from /podr/container/pipe/731ed521d8a6_jansahayak-api/stdout_5a2b74c5fb1549ee8d4b19f5b414ec16.
+2026-04-03T07:00:37.7016918Z Creating stderr named pipe at /podr/container/pipe/731ed521d8a6_jansahayak-api/stderr_6e4edc010858447aa4e1ea9e7de64862.
+2026-04-03T07:00:37.7102443Z Successfully created stderr named pipe at: /podr/container/pipe/731ed521d8a6_jansahayak-api/stderr_6e4edc010858447aa4e1ea9e7de64862.
+2026-04-03T07:00:37.7110777Z Opening named pipe /podr/container/pipe/731ed521d8a6_jansahayak-api/stderr_6e4edc010858447aa4e1ea9e7de64862 for reading in non-blocking mode.
+2026-04-03T07:00:37.7116430Z Successfully opened named pipe: /podr/container/pipe/731ed521d8a6_jansahayak-api/stderr_6e4edc010858447aa4e1ea9e7de64862.
+2026-04-03T07:00:37.7188191Z Successfully removed non-blocking flag from /podr/container/pipe/731ed521d8a6_jansahayak-api/stderr_6e4edc010858447aa4e1ea9e7de64862.
+2026-04-03T07:00:37.7189879Z Creating container with image: jansahayakacr.azurecr.io/jansahayak-api:latest from registry: jansahayakacr.azurecr.io and fully qualified image name: jansahayakacr.azurecr.io/jansahayak-api:latest
+2026-04-03T07:00:38.6535273Z Starting container: 731ed521d8a6_jansahayak-api.
+2026-04-03T07:00:38.6864217Z Starting watchers and probes.
+2026-04-03T07:00:38.6866754Z Starting metrics collection.
+2026-04-03T07:00:38.6867974Z Container is running.
+2026-04-03T07:00:38.6868633Z State: Starting, Action: CreatingContainer, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T07:00:38.7276433Z Container start method finished after 191973 ms.
+2026-04-03T07:00:38.7349658Z State: Starting, Action: InitiatingSiteWarmUpProbe, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Container jansahayak-api successfully created and is running., DetailsLevel: INFO
+2026-04-03T07:00:38.7350563Z State: Starting, Action: WaitingForSiteWarmUpProbeSuccess, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Pinging warmup path to ensure container is ready to receive requests., DetailsLevel: INFO
+2026-04-03T07:01:10.7698637Z Site startup probe succeeded after 32.0266053 seconds.
+2026-04-03T07:01:10.8924277Z State: Starting, Action: WarmUpProbeSucceeded, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site startup probe succeeded after 32.0266053 seconds., DetailsLevel: INFO
+2026-04-03T07:01:11.3083021Z Site started.
+2026-04-03T07:01:11.3141504Z State: Started, Action: None, LastError: , LastErrorTimestamp: 01/01/0001 00:00:00, LastErrorDetails: , Details: Site started at 04/03/2026 07:01:11 (UTC), DetailsLevel: INFO
+2026-04-03T07:01:31.3488696Z State: Stopping, Action: StoppingSite, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site started at 04/03/2026 05:47:15 (UTC), DetailsLevel: INFO
+2026-04-03T07:01:31.3492428Z State: Stopping, Action: StoppingSiteContainers, LastError: ContainerTimeout, LastErrorTimestamp: 04/03/2026 05:37:25, LastErrorDetails: Container did not start within expected time limit of 230s. Please inspect your container logs for more details., Details: Site started at 04/03/2026 05:47:15 (UTC), DetailsLevel: INFO
+2026-04-03T07:01:31.3493519Z Container is terminating. Grace period: 5 seconds.
+2026-04-03T07:01:31.3762375Z Stop and delete container. Retry count = 0
+2026-04-03T07:01:31.3763346Z Stopping container: 695dee94eff4_jansahayak-api.
+2026-04-03T07:01:36.5881164Z Deleting container: 695dee94eff4_jansahayak-api. Retry count = 0
+2026-04-03T07:01:36.8543005Z Container spec TerminationMessagePolicy  path 
+2026-04-03T07:01:36.8546282Z Container is terminated. Total time elapsed: 5505 ms.
+2026-04-03T07:01:36.8547376Z Site: jansahayak-api stopped.

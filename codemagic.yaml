@@ -1,0 +1,79 @@
+# JanSahayak CodeMagic CI/CD Configuration File
+# Place this at the root of your repository
+
+workflows:
+  jansahayak-build-pipeline:
+    name: JanSahayak Android & iOS Build Pipeline
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      groups:
+        - azure_secrets  # Create this group in CodeMagic UI (Environment Variables)
+                         # Variables needed:
+                         # AZURE_SPEECH_KEY
+                         # AZURE_SPEECH_REGION
+        - app_store_connect # Create this group in CodeMagic UI (Account Settings -> API Keys)
+                            # Variables needed for App Store build:
+                            # APP_STORE_CONNECT_KEY_ID
+                            # APP_STORE_CONNECT_ISSUER_ID
+                            # APP_STORE_CONNECT_PRIVATE_KEY
+      vars:
+        PACKAGE_NAME: "com.salil.jansahayak"
+        PROJECT_PATH: "jansahayak"
+    
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+
+    scripts:
+      - name: Create .env from Environment Variables
+        script: |
+          cd $PROJECT_PATH
+          echo "AZURE_SPEECH_KEY=$AZURE_SPEECH_KEY" > .env
+          echo "AZURE_SPEECH_REGION=$AZURE_SPEECH_REGION" >> .env
+          echo "API_BASE_URL=https://jansahayak-api.azurewebsites.net" >> .env
+          echo "Created .env with Secrets"
+
+      - name: Fetch Flutter Packages
+        script: |
+          cd $PROJECT_PATH
+          flutter packages pub get
+
+      - name: Flutter Unit Tests
+        script: |
+          cd $PROJECT_PATH
+          flutter test
+
+      - name: Build Android APK (Release)
+        script: |
+          cd $PROJECT_PATH
+          flutter build apk --release --build-name=3.0.0 --build-number=$BUILD_NUMBER
+
+      - name: Build Android App Bundle (AAB)
+        script: |
+          cd $PROJECT_PATH
+          flutter build appbundle --release --build-name=3.0.0 --build-number=$BUILD_NUMBER
+
+      - name: Flutter build iOS (No Signing)
+        script: |
+          cd $PROJECT_PATH
+          flutter build ios --release --no-codesign --build-name=3.0.0 --build-number=$BUILD_NUMBER
+
+    artifacts:
+      - jansahayak/build/**/outputs/**/*.apk
+      - jansahayak/build/**/outputs/**/*.aab
+      - jansahayak/build/**/outputs/**/mapping.txt
+      - jansahayak/build/ios/ipa/*.ipa
+
+    publishing:
+      email:
+        recipients:
+          - salilvartak@example.com # Replace with your email
+        notify:
+          success: true
+          failure: true
