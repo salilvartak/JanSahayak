@@ -65,11 +65,16 @@ Grounding rules (critical for accuracy):
   use the text to LOCATE the target, then box the nearby physical control.
 • For controls (switches, buttons, knobs, keys, ports): box just the interactive \
   part — not the whole panel or enclosure.
+• For keyboard keys: find the specific key by reading the labels printed on each \
+  key. Box that individual key face tightly, including a small margin so it is \
+  clearly visible when highlighted. The box CAN be small — that is fine.
 • The box should touch or nearly touch the object's edges on all four sides.
 • Never include large amounts of background; a few pixels of margin is fine.
 • If the query mentions a product and you see a barcode/QR, box the product \
   packaging, not the barcode.
 • Return at most ONE result — the single best match.
+• IMPORTANT: even if the object is small (a single button, key, LED, port), \
+  you MUST still return a box. Small boxes are perfectly valid.
 
 Output format — raw JSON array, nothing else:
 [{{"label": "short descriptive name", "box_2d": [ymin, xmin, ymax, xmax]}}]
@@ -80,6 +85,22 @@ box_2d rules:
 • Values are relative to image dimensions (normalised ×1000)
 
 If the object is genuinely not visible in the image, return: []
+"""
+
+_DIRECT_DETECT_PROMPT = """\
+Look at this image carefully. The user wants to find: "{query}"
+
+This might be a SMALL object like a button, key, switch, port, LED, icon, or label.
+Zoom in mentally and scan every part of the image.
+
+You MUST return a bounding box even if the object is tiny. A small box is correct \
+for a small object.
+
+Return raw JSON, nothing else:
+[{{"label": "short name", "box_2d": [ymin, xmin, ymax, xmax]}}]
+
+box_2d: 4 integers in 0–1000 (normalised coordinates). ymin < ymax, xmin < xmax.
+If truly not visible, return: []
 """
 
 _REFINE_PROMPT = """\
@@ -439,64 +460,15 @@ class GeminiService:
         fx2, fy2 = cx1 + rx2, cy1 + ry2
         return fx1, fy1, fx2, fy2, rlabel
 
-    def _consensus_detect(self, pil_img, target: str, n: int = 3) -> list:
-        """
-        Call Gemini `n` times and pick the most consistent box via IoU voting.
-        This dramatically reduces random misplacements.
-        """
-        all_results = []
-        for attempt in range(n):
-            boxes = self._call_detect(pil_img, target)
-            if boxes:
-                all_results.append(boxes[0])  # We only care about the top-1 box
-
-        if not all_results:
-            return []
-        if len(all_results) == 1:
-            return [all_results[0]]
-
-        # Pick the box with the highest average IoU against all others (most agreed-upon)
-        best_idx = 0
-        best_avg_iou = -1.0
-        for i, a in enumerate(all_results):
-            iou_sum = 0.0
-            for j, b in enumerate(all_results):
-                if i == j:
-                    continue
-                iou_sum += self._box_iou(a.get('box_2d', []), b.get('box_2d', []))
-            avg = iou_sum / (len(all_results) - 1)
-            if avg > best_avg_iou:
-                best_avg_iou = avg
-                best_idx = i
-
-        log.info("  consensus: %d/%d results, best IoU=%.2f", len(all_results), n, best_avg_iou)
-        return [all_results[best_idx]]
-
-    @staticmethod
-    def _box_iou(a: list, b: list) -> float:
-        """Compute IoU between two [ymin, xmin, ymax, xmax] boxes (0-1000 scale)."""
-        if len(a) != 4 or len(b) != 4:
-            return 0.0
-        y1 = max(a[0], b[0])
-        x1 = max(a[1], b[1])
-        y2 = min(a[2], b[2])
-        x2 = min(a[3], b[3])
-        inter = max(0, y2 - y1) * max(0, x2 - x1)
-        area_a = max(0, a[2] - a[0]) * max(0, a[3] - a[1])
-        area_b = max(0, b[2] - b[0]) * max(0, b[3] - b[1])
-        union = area_a + area_b - inter
-        return inter / union if union > 0 else 0.0
-
     def highlight_query(self, image_bytes: bytes, query: str) -> Tuple[bytes, List[str]]:
         """
         Locate what the user asked for and draw a highlighted box.
 
-        Strategy:
-          1. Extract the core visual target from the natural-language query.
-          2. Run consensus detection (3 Gemini calls, pick best via IoU).
-          3. If empty, retry with the full original query.
-          4. Refine the winning box with a crop-based second pass.
-          5. Draw clean annotation.
+        Single-call strategy for speed:
+          1. Extract core target from query.
+          2. One Gemini detect call.
+          3. If miss, one fallback with full query.
+          4. Draw annotation — no refinement pass.
 
         Returns (annotated_bytes, found_labels).
         On failure or generic query, returns (original_bytes, []).
@@ -514,16 +486,16 @@ class GeminiService:
 
         pil_img, aligned_bytes = _normalise_image_bytes(image_bytes)
 
-        # Attempt 1: consensus detection with cleaned target
-        boxes = self._consensus_detect(pil_img, target)
+        # Single detect call with cleaned target
+        boxes = self._call_detect(pil_img, target)
 
-        # Attempt 2: full original query (catches cases where brand/context helps)
+        # Fallback: full original query if target didn't match
         if not boxes and target.lower() != query.lower().strip():
-            log.info("highlight_query: attempt 2 with full query")
-            boxes = self._consensus_detect(pil_img, query)
+            log.info("highlight_query: fallback with full query")
+            boxes = self._call_detect(pil_img, query, prompt_template=_DIRECT_DETECT_PROMPT)
 
         if not boxes:
-            log.info("highlight_query: not found after 2 attempts")
+            log.info("highlight_query: not found")
             return image_bytes, []
 
         img = _decode(aligned_bytes)
@@ -536,7 +508,6 @@ class GeminiService:
 
         found_labels: List[str] = []
         for x1, y1, x2, y2, label in parsed:
-            x1, y1, x2, y2, label = self._refine_box(pil_img, label, x1, y1, x2, y2)
             log.info("  drawing box for '%s': (%d,%d)→(%d,%d)", label, x1, y1, x2, y2)
             _draw_targeted_box(img, x1, y1, x2, y2, label)
             if label not in found_labels:
@@ -586,6 +557,80 @@ class GeminiService:
 
         try:
             pil_img = PIL.Image.open(io.BytesIO(annotated_image_bytes))
+            response = self._client.models.generate_content(
+                model=self._model,
+                contents=[prompt, pil_img],
+            )
+            return response.text.strip()
+        except Exception:
+            return self._fallback(detected_objects)
+
+    # ── 2b. Follow-up explanation (with conversation history) ──────────────
+
+    def explain_followup(
+        self,
+        image_bytes: bytes,
+        follow_up_query: str,
+        detected_objects: List[str],
+        language: str = "en-IN",
+        rag_context: str = "",
+        conversation_history: str = "",
+    ) -> str:
+        """Answer a follow-up question using the original image and conversation context.
+
+        This is much faster than re-running the full pipeline because it makes
+        only ONE Gemini call with the full conversation history injected.
+        """
+        if not self.available:
+            return self._fallback(detected_objects)
+
+        obj_list = ', '.join(detected_objects) if detected_objects else 'no specific objects'
+        lang_info = _LANGUAGE_INFO.get(language, {"name": "English", "script": "Latin"})
+
+        prompt_parts = []
+
+        if rag_context.strip():
+            prompt_parts.append(rag_context)
+
+        if conversation_history.strip():
+            prompt_parts.append(
+                "=== CONVERSATION SO FAR ===\n"
+                f"{conversation_history}\n"
+                "=== END CONVERSATION ===\n"
+                "The user is now asking a follow-up question based on the above conversation."
+            )
+
+        prompt_parts.append(
+            f'You are speaking to someone who cannot read. Be very short and simple — like a helpful friend.\n\n'
+            f'The person is looking at the same image as before.\n'
+            f'Previously highlighted items: {obj_list}\n'
+            f'Language: {lang_info["name"]} (code: {language}, script: {lang_info["script"]})\n\n'
+            f'Their NEW follow-up question is: "{follow_up_query}"\n\n'
+            f'Answer THIS specific question directly using what you can see in the image '
+            f'and what was discussed before. Do NOT repeat your previous answer.\n\n'
+            f'ALWAYS:\n'
+            f'- Write your entire response in {lang_info["name"]} using {lang_info["script"]} script.\n'
+            f'- Use simple everyday words.\n'
+            f'- Sound warm and natural.\n\n'
+            f'Output format (STRICT):\n'
+            f'1) Main answer: exactly 2 short natural sentences.\n'
+            f'2) Then add exactly 2 follow-up question suggestions.\n\n'
+            f'Return in this exact structure:\n'
+            f'<sentence 1>\n'
+            f'<sentence 2>\n'
+            f'You can also ask:\n'
+            f'1) <question suggestion 1?>\n'
+            f'2) <question suggestion 2?>\n\n'
+            f'Rules for suggestions:\n'
+            f'- They must be relevant to this image and conversation.\n'
+            f'- Keep each suggestion short and easy to speak.\n'
+            f'- Keep everything in {lang_info["name"]} and {lang_info["script"]}.'
+        )
+
+        prompt = "\n\n".join(prompt_parts)
+
+        try:
+            pil_img = PIL.Image.open(io.BytesIO(image_bytes))
             response = self._client.models.generate_content(
                 model=self._model,
                 contents=[prompt, pil_img],

@@ -13,6 +13,7 @@ POST /clarify
 """
 from __future__ import annotations
 
+import asyncio
 import base64
 import logging
 import uuid
@@ -65,10 +66,28 @@ except Exception as exc:
     raise RuntimeError(f"Service initialisation failed: {exc}") from exc
 
 
+_neo4j_ready = False
+
+
+async def _neo4j_connect(retries: int = 5, delay: float = 10) -> None:
+    global _neo4j_ready
+    for attempt in range(1, retries + 1):
+        try:
+            await _neo4j.verify_connectivity()
+            await _neo4j.ensure_indexes()
+            _neo4j_ready = True
+            log.info("Neo4j connected on attempt %d", attempt)
+            return
+        except Exception as exc:
+            log.warning("Neo4j attempt %d/%d failed: %s", attempt, retries, exc)
+            if attempt < retries:
+                await asyncio.sleep(delay)
+    log.error("Neo4j unavailable after %d attempts — running without graph features", retries)
+
+
 @app.on_event("startup")
 async def _on_startup() -> None:
-    await _neo4j.verify_connectivity()
-    await _neo4j.ensure_indexes()
+    asyncio.create_task(_neo4j_connect())
 
 
 @app.on_event("shutdown")
@@ -101,27 +120,26 @@ async def _run_pipeline(
     language: str = "en-IN",
 ) -> dict:
     """
-    Full annotation pipeline. Returns the JSON response dict.
-    Raises HTTPException on hard failures.
+    Full annotation pipeline — optimised for speed.
+    Target: 3 Gemini calls max (detect, explain, translate-for-DB).
+    Returns the JSON response dict.
     """
     unique = str(uuid.uuid4())
+    is_english = language in ("en-IN", "en-US")
+    query_en = query if is_english else None
 
-    # ── Step 1: Translate query to English (must be first) ────────────────────
-    if language not in ("en-IN", "en-US"):
-        query_en = await asyncio.to_thread(_gemini.to_english, query)
-        log.info("[pipeline] translated query: %r → %r", query, query_en)
-    else:
-        query_en = query
-
-    # ── Step 2: Parallel — upload original + YOLO + Gemini highlight ──────────
+    # ── Step 1: Parallel — upload + YOLO + Gemini highlight + translate ───────
     original_path = f"original/{device_id}/{unique}.jpg"
 
-    results = await asyncio.gather(
-        asyncio.to_thread(_supabase.upload_image, original_path, image_bytes),
-        asyncio.to_thread(_vision.detect_labels, image_bytes),
-        asyncio.to_thread(_gemini.highlight_query, image_bytes, query_en),
-        return_exceptions=True,
-    )
+    tasks = [
+        asyncio.to_thread(_supabase.upload_image, original_path, image_bytes),  # 0
+        asyncio.to_thread(_vision.detect_labels, image_bytes),                   # 1
+        asyncio.to_thread(_gemini.highlight_query, image_bytes, query),          # 2
+    ]
+    if not is_english:
+        tasks.append(asyncio.to_thread(_gemini.to_english, query))               # 3
+
+    results = await asyncio.gather(*tasks, return_exceptions=True)
 
     if isinstance(results[0], Exception):
         raise HTTPException(status_code=502, detail=f"Supabase upload failed: {results[0]}")
@@ -131,28 +149,29 @@ async def _run_pipeline(
     original_url: str = results[0]
     yolo_labels: list = results[1]
     gemini_annotated, gemini_labels = results[2] if not isinstance(results[2], Exception) else (image_bytes, [])
+    if not is_english:
+        query_en = results[3] if not isinstance(results[3], Exception) else query
+        log.info("[pipeline] translated query: %r → %r", query, query_en)
 
     annotated_bytes = gemini_annotated if gemini_labels else image_bytes
     detected_objects = list(dict.fromkeys(yolo_labels + gemini_labels))
 
-    # ── Step 3: Parallel — upload annotated + fetch RAG context ──────────────
+    # ── Step 2: Parallel — upload annotated + RAG context + explanation ───────
     annotated_path = f"annotated/{device_id}/{unique}.jpg"
 
-    step3 = await asyncio.gather(
+    step2 = await asyncio.gather(
         asyncio.to_thread(_supabase.upload_image, annotated_path, annotated_bytes),
         _neo4j.get_rag_context(device_id=device_id, session_id=session_id, current_objects=detected_objects),
         return_exceptions=True,
     )
 
-    if isinstance(step3[0], Exception):
-        raise HTTPException(status_code=502, detail=f"Supabase upload failed: {step3[0]}")
+    if isinstance(step2[0], Exception):
+        raise HTTPException(status_code=502, detail=f"Supabase upload failed: {step2[0]}")
 
-    annotated_url: str = step3[0]
-    rag_context: str = step3[1] if not isinstance(step3[1], Exception) else ""
-    if rag_context:
-        log.info("[RAG] %d chars injected for device=%s", len(rag_context), device_id[:8])
+    annotated_url: str = step2[0]
+    rag_context: str = step2[1] if not isinstance(step2[1], Exception) else ""
 
-    # ── Step 4: Gemini explanation — critical path, user waits for this ───────
+    # ── Step 3: Gemini explanation (needs RAG context from step 2) ────────────
     explanation = await asyncio.to_thread(
         _gemini.explain,
         image_bytes,
@@ -162,10 +181,10 @@ async def _run_pipeline(
         rag_context,
     )
 
-    # ── Step 5: Fire-and-forget — DB writes after response is ready ───────────
+    # ── Fire-and-forget — DB writes after response is ready ──────────────────
     async def _post_process():
         try:
-            query_id = await asyncio.to_thread(
+            qid = await asyncio.to_thread(
                 _supabase.create_query,
                 device_id, query, conversation_id, explanation,
             )
@@ -174,12 +193,12 @@ async def _run_pipeline(
             else:
                 await asyncio.to_thread(_supabase.touch_conversation, conversation_id)
             await asyncio.to_thread(
-                _supabase.create_image_record, device_id, query_id, original_url, annotated_url
+                _supabase.create_image_record, device_id, qid, original_url, annotated_url
             )
-            explanation_en = await asyncio.to_thread(_gemini.to_english, explanation)
-            keywords = await asyncio.to_thread(_gemini.extract_keywords, query_en, explanation_en)
+            explanation_en = explanation if is_english else await asyncio.to_thread(_gemini.to_english, explanation)
+            keywords = await asyncio.to_thread(_gemini.extract_keywords, query_en or query, explanation_en)
             await _neo4j.record_interaction(
-                device_id=device_id, query_id=query_id, query_text=query_en,
+                device_id=device_id, query_id=qid, query_text=query_en or query,
                 response_text=explanation_en, image_url=original_url,
                 keywords=keywords, session_id=session_id,
                 prev_query_text=prev_query_en, turn=turn,
@@ -189,10 +208,8 @@ async def _run_pipeline(
 
     asyncio.create_task(_post_process())
 
-    # Use a placeholder query_id/image_id in the response — DB writes happen async
     query_id = str(uuid.uuid4())
     image_id = str(uuid.uuid4())
-
     b64 = base64.b64encode(annotated_bytes).decode("utf-8")
 
     return {
@@ -232,29 +249,7 @@ async def annotate(
     if not image_bytes:
         raise HTTPException(status_code=400, detail="Empty image file.")
 
-    # ── Clarity check ─────────────────────────────────────────────────────────
-    is_clear, clarification_question = _gemini.check_clarity(image_bytes, query)
-
-    if not is_clear:
-        session_id = _sessions.create(
-            device_id,
-            image_bytes,
-            query,
-            language,
-            conversation_id=conversation_id,
-        )
-        _sessions.append(session_id, "assistant", clarification_question)
-        log.info("annotate: unclear query – session %s created", session_id)
-        return JSONResponse({
-            "session_id": session_id,
-            "conversation_id": conversation_id,
-            "needs_clarification": True,
-            "clarification_question": clarification_question,
-            "device_id": device_id,
-            "is_new_device": is_new_device,
-        })
-
-    # ── Clear query – run pipeline ────────────────────────────────────────────
+    # Skip clarity check — run pipeline directly for speed
     session_id = _sessions.create(
         device_id,
         image_bytes,
@@ -272,7 +267,12 @@ async def annotate(
         language=language,
     )
     result["is_new_device"] = is_new_device
-    # Keep session alive for follow-up questions (TTL handles expiry)
+    # Cache pipeline outputs in the session so /clarify can skip re-detection
+    session = _sessions.get(session_id)
+    if session:
+        session["detected_objects"] = result.get("detected_objects", [])
+        session["annotated_url"] = result.get("annotated_url", "")
+        session["original_url"] = result.get("original_url", "")
     _sessions.append(session_id, "assistant", result.get("explanation", ""))
     return JSONResponse(result)
 
@@ -326,8 +326,9 @@ async def transcribe_audio(
 @app.post("/clarify")
 async def clarify(req: ClarifyRequest):
     """
-    Resume a session after user answers the clarification question.
-    Merges conversation history into an enriched query and runs the full pipeline.
+    Follow-up endpoint.  Uses the existing session image + conversation history
+    to answer the user's new question *without* re-running the full detection
+    pipeline.  Only calls Gemini once (explain) → much faster.
     """
     session = _sessions.get(req.session_id)
     if session is None:
@@ -344,31 +345,97 @@ async def clarify(req: ClarifyRequest):
     language = req.language or session.get("language", "en-IN")
     history = session["history"]   # [{role, content}, ...]
 
-    # Append user's answer to history
     _sessions.append(req.session_id, "user", req.answer)
 
-    # Build enriched query: original question + clarification answer
-    original_query = history[0]["content"]
-    enriched_query = f"{original_query} — {req.answer}"
-    log.info("clarify: session=%s enriched_query='%s'", req.session_id, enriched_query)
-
-    # prev_query for Neo4j chain
-    prev_query_en = _gemini.to_english(original_query)
     turn = sum(1 for h in history if h["role"] == "user") + 1
+    original_query = history[0]["content"]
+    follow_up_query = req.answer
 
-    result = await _run_pipeline(
-        image_bytes=image_bytes,
-        query=enriched_query,
-        device_id=device_id,
-        session_id=req.session_id,
-        conversation_id=conversation_id,
-        prev_query_en=prev_query_en,
-        turn=turn,
-        language=language,
+    log.info("clarify: session=%s turn=%d follow_up='%s'", req.session_id, turn, follow_up_query)
+
+    is_english = language in ("en-IN", "en-US")
+
+    # Build conversation context for Gemini
+    convo_lines = []
+    for h in history:
+        role_label = "User" if h["role"] == "user" else "Assistant"
+        convo_lines.append(f"{role_label}: {h['content']}")
+    convo_context = "\n".join(convo_lines)
+
+    # Reuse previously detected objects & annotated image from session
+    detected_objects = session.get("detected_objects", [])
+    annotated_url = session.get("annotated_url", "")
+    original_url = session.get("original_url", "")
+
+    # Fetch RAG context in parallel with optional translation
+    rag_task = _neo4j.get_rag_context(
+        device_id=device_id, session_id=req.session_id,
+        current_objects=detected_objects,
     )
-    result["is_new_device"] = False
-    # Keep session alive for further follow-ups
-    _sessions.append(req.session_id, "assistant", result.get("explanation", ""))
+    translate_task = (
+        asyncio.to_thread(_gemini.to_english, follow_up_query)
+        if not is_english else None
+    )
+
+    tasks_results = await asyncio.gather(
+        rag_task,
+        translate_task or asyncio.sleep(0),
+        return_exceptions=True,
+    )
+
+    rag_context = tasks_results[0] if not isinstance(tasks_results[0], Exception) else ""
+    query_en = follow_up_query if is_english else (
+        tasks_results[1] if not isinstance(tasks_results[1], Exception) else follow_up_query
+    )
+
+    # Single Gemini call: explain with full conversation context
+    explanation = await asyncio.to_thread(
+        _gemini.explain_followup,
+        image_bytes,
+        follow_up_query,
+        detected_objects,
+        language,
+        rag_context,
+        convo_context,
+    )
+
+    # Fire-and-forget DB writes
+    async def _post_process():
+        try:
+            qid = await asyncio.to_thread(
+                _supabase.create_query,
+                device_id, follow_up_query, conversation_id, explanation,
+            )
+            await asyncio.to_thread(_supabase.touch_conversation, conversation_id)
+            explanation_en = explanation if is_english else await asyncio.to_thread(_gemini.to_english, explanation)
+            keywords = await asyncio.to_thread(_gemini.extract_keywords, query_en, explanation_en)
+            await _neo4j.record_interaction(
+                device_id=device_id, query_id=qid, query_text=query_en,
+                response_text=explanation_en, image_url=original_url,
+                keywords=keywords, session_id=req.session_id,
+                prev_query_text=original_query, turn=turn,
+            )
+        except Exception as exc:
+            log.error("[clarify post_process] error: %s", exc, exc_info=True)
+
+    asyncio.create_task(_post_process())
+
+    result = {
+        "session_id": req.session_id,
+        "conversation_id": conversation_id,
+        "needs_clarification": False,
+        "clarification_question": "",
+        "device_id": device_id,
+        "query_id": str(uuid.uuid4()),
+        "image_id": str(uuid.uuid4()),
+        "original_url": original_url,
+        "annotated_url": annotated_url,
+        "detected_objects": detected_objects,
+        "annotated_image_base64": "",
+        "explanation": explanation,
+        "is_new_device": False,
+    }
+    _sessions.append(req.session_id, "assistant", explanation)
     return JSONResponse(result)
 
 @app.get("/conversation/{conversation_id}")

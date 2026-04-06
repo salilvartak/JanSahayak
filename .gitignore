@@ -34,6 +34,9 @@ jansahayak/android/app/debug/
 jansahayak/android/app/profile/
 jansahayak/android/app/release/
 jansahayak/android/local.properties
+jansahayak/android/key.properties
+*.keystore
+*.jks
 
 # iOS
 jansahayak/ios/Flutter/Generated.xcconfig

@@ -46,6 +46,17 @@ class _RootScreenState extends State<_RootScreen> {
   int _index = 0;
   int _historyRefreshSeed = 0;
 
+  void _onTabChanged(int i) {
+    if (i == _index) return;
+    HapticFeedback.mediumImpact();
+    setState(() {
+      _index = i;
+      if (i == 1) {
+        _historyRefreshSeed++;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,14 +72,7 @@ class _RootScreenState extends State<_RootScreen> {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
-        onDestinationSelected: (i) {
-          setState(() {
-            _index = i;
-            if (i == 1) {
-              _historyRefreshSeed++;
-            }
-          });
-        },
+        onDestinationSelected: _onTabChanged,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
           NavigationDestination(

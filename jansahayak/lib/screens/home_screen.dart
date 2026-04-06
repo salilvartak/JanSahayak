@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -7,12 +8,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 
-import 'dart:ui' as ui;
-
 import '../services/azure_speech_service.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
-import '../services/tutorial_service.dart';
 import 'conversation_screen.dart';
+import 'tutorial_screen.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,17 +33,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final AzureSpeechService _azure = AzureSpeechService();
   final FlutterTts _tts = FlutterTts();
 
-  // ── Tutorial Keys ─────────────────────────────────────────────────────────
-  final GlobalKey _flashKey = GlobalKey();
-  final GlobalKey _micKey = GlobalKey();
-  final GlobalKey _flipKey = GlobalKey();
-
   // ── UI state ──────────────────────────────────────────────────────────────
   bool _isRecording = false;
   bool _isBusy = false;
+  bool _cameraError = false;
   String _liveTranscript = '';
-  String? _pendingImagePath;
   String? _pendingAudioPath;
+  Timer? _busyTimeout;
 
   @override
   void initState() {
@@ -74,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_camera == null || !_camera!.value.isInitialized) return;
     if (state == AppLifecycleState.inactive || state == AppLifecycleState.paused) {
       _camera?.dispose();
       _camera = null;
@@ -92,56 +85,29 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       await _showPermissionDisclosure();
       return;
     }
-    
-    final allCameras = await availableCameras();
-    if (allCameras.isEmpty) return;
 
-    _cameras = [];
     try {
-      _cameras.add(allCameras.firstWhere((c) => c.lensDirection == CameraLensDirection.back));
-    } catch (_) {}
-    try {
-      _cameras.add(allCameras.firstWhere((c) => c.lensDirection == CameraLensDirection.front));
-    } catch (_) {}
-    if (_cameras.isEmpty) _cameras = allCameras;
+      final allCameras = await availableCameras();
+      if (allCameras.isEmpty) {
+        if (mounted) setState(() => _cameraError = true);
+        return;
+      }
 
-    await _createCameraController(_cameras.first);
-    
-    // Play localized welcome message
-    _playWelcomeMessage();
-  }
+      _cameras = [];
+      try {
+        _cameras.add(allCameras.firstWhere((c) => c.lensDirection == CameraLensDirection.back));
+      } catch (_) {}
+      try {
+        _cameras.add(allCameras.firstWhere((c) => c.lensDirection == CameraLensDirection.front));
+      } catch (_) {}
+      if (_cameras.isEmpty) _cameras = allCameras;
 
-  Future<void> _playWelcomeMessage() async {
-    final langCode = ui.PlatformDispatcher.instance.locale.languageCode;
-    String message;
-    String ttsLang;
-
-    switch (langCode) {
-      case 'hi':
-        message = "नमस्ते, मैं जन-सहायक, आपका व्यक्तिगत एआई असिस्टेंट हूँ।";
-        ttsLang = 'hi-IN';
-        break;
-      case 'mr':
-        message = "नमस्कार, मी जन-सहाय्यक, तुमचा वैयक्तिक एआय सहाय्यक आहे.";
-        ttsLang = 'mr-IN';
-        break;
-      case 'te':
-        message = "నమస్తే, నేను జన-సహాయక్, మీ వ్యక్తిగత ఏఐ అసిస్టెంట్.";
-        ttsLang = 'te-IN';
-        break;
-      case 'en':
-      default:
-        message = "Hi, I am Jan Sahayak, your personal A I assistant.";
-        ttsLang = 'en-IN';
-        break;
+      await _createCameraController(_cameras.first);
+      if (mounted) setState(() => _cameraError = false);
+    } catch (e) {
+      debugPrint('[HomeScreen] _init error: $e');
+      if (mounted) setState(() => _cameraError = true);
     }
-
-    try {
-      await _tts.setSharedInstance(true);
-      await _tts.setLanguage(ttsLang);
-      await _tts.setSpeechRate(0.65);
-      await _tts.speak(message);
-    } catch (_) {}
   }
 
   Future<void> _showPermissionDisclosure() async {
@@ -157,22 +123,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.security_rounded, color: Colors.cyanAccent, size: 80),
-                const SizedBox(height: 32),
-                const Text(
-                  'Privacy & Sensors',
-                  style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _permissionIcon(Icons.camera_alt_rounded),
+                    _permissionIcon(Icons.mic_rounded),
+                    _permissionIcon(Icons.shield_rounded),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                const Text(
-                  'JanSahayak uses your camera and microphone to "see" and "hear" your queries. \n\nImages and audio are securely processed to provide real-time AI assistance. We do not store your data for any other purpose.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white70, fontSize: 16, height: 1.5),
-                ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 64),
                 SizedBox(
-                  width: double.infinity,
-                  height: 56,
+                  width: 100,
+                  height: 100,
                   child: FilledButton(
                     onPressed: () async {
                       Navigator.pop(context);
@@ -180,11 +142,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       _init();
                     },
                     style: FilledButton.styleFrom(
-                      backgroundColor: Colors.cyanAccent,
-                      foregroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      backgroundColor: const Color(0xFF2E7D32),
+                      shape: const CircleBorder(),
                     ),
-                    child: const Text('Agree & Continue', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    child: const Icon(Icons.check_rounded, size: 52, color: Colors.white),
                   ),
                 ),
               ],
@@ -192,6 +153,19 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         );
       },
+    );
+  }
+
+  Widget _permissionIcon(IconData icon) {
+    return Container(
+      width: 80,
+      height: 80,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white.withValues(alpha: 0.08),
+        border: Border.all(color: Colors.cyanAccent.withValues(alpha: 0.3)),
+      ),
+      child: Icon(icon, color: Colors.cyanAccent, size: 40),
     );
   }
 
@@ -203,13 +177,19 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
-    await _camera!.initialize();
-    await _camera!.setFlashMode(_flashMode);
-    if (mounted) setState(() {});
+    try {
+      await _camera!.initialize();
+      await _camera!.setFlashMode(_flashMode);
+      if (mounted) setState(() => _cameraError = false);
+    } catch (e) {
+      debugPrint('[HomeScreen] Camera init failed: $e');
+      if (mounted) setState(() => _cameraError = true);
+    }
   }
 
   @override
   void dispose() {
+    _busyTimeout?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _tts.stop();
     _recorder.dispose();
@@ -238,8 +218,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (_isBusy || _camera == null || !_camera!.value.isInitialized) return;
 
     HapticFeedback.mediumImpact();
-    await _tts.stop(); // Stop welcome message if user interrupts
-    await Future.delayed(const Duration(milliseconds: 100)); // allow TTS audio focus to release
+    await _tts.stop();
+    await Future.delayed(const Duration(milliseconds: 100));
 
     setState(() {
       _isRecording = true;
@@ -248,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     final dir = await getTemporaryDirectory();
     final audioPath = '${dir.path}/qs_${DateTime.now().millisecondsSinceEpoch}.wav';
-    
+
     setState(() {
       _pendingAudioPath = audioPath;
     });
@@ -261,15 +241,24 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       ),
       path: audioPath,
     );
-    debugPrint('[HomeScreen] recording started → $audioPath');
+  }
+
+  void _cancelBusy() {
+    _busyTimeout?.cancel();
+    if (mounted) {
+      setState(() {
+        _isBusy = false;
+        _liveTranscript = '';
+      });
+    }
+    HapticFeedback.vibrate();
   }
 
   Future<void> _onHoldEnd() async {
     if (!_isRecording || _isBusy) return;
 
     final navigator = Navigator.of(context);
-    
-    // Stop recording first before playing chimes/taking picture to dodge audio ducking bugs
+
     final stoppedPath = await _recorder.stop();
     final audioPath = stoppedPath ?? _pendingAudioPath;
 
@@ -288,12 +277,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     setState(() {
       _isRecording = false;
       _isBusy = true;
-      _pendingImagePath = null;
       _pendingAudioPath = null;
     });
 
+    // Auto-cancel after 15s if STT hangs
+    _busyTimeout?.cancel();
+    _busyTimeout = Timer(const Duration(seconds: 15), _cancelBusy);
+
     final String resolvedImagePath = imagePath ?? '';
     if (!mounted || resolvedImagePath.isEmpty) {
+      _busyTimeout?.cancel();
       setState(() => _isBusy = false);
       return;
     }
@@ -314,6 +307,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       }
     }
 
+    _busyTimeout?.cancel();
+
     if (!mounted) return;
     await navigator.push(
       MaterialPageRoute(
@@ -333,89 +328,38 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _playTutorialStep(int index) async {
-    final scripts = TutorialScript.scripts;
-    if (index < 0 || index >= scripts.length) return;
-    
-    final langCode = ui.PlatformDispatcher.instance.locale.languageCode;
-    String ttsLang = 'en-IN';
-    switch (langCode) {
-      case 'hi': ttsLang = 'hi-IN'; break;
-      case 'mr': ttsLang = 'mr-IN'; break;
-      case 'te': ttsLang = 'te-IN'; break;
-    }
-    
-    await _tts.stop();
-    await _tts.setLanguage(ttsLang);
-    await _tts.setSpeechRate(0.6);
-    await _tts.speak(scripts[index].text);
+  void _openTutorial() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const TutorialScreen()),
+    );
   }
 
-  void _startTutorial() {
-    _lastPlayedStepIndex = -1; // Reset to ensure audio plays on 1st step
-    final scripts = TutorialScript.scripts;
-    final List<TargetFocus> targets = [];
-
-    // 1. Welcome + Main Orb
-    targets.add(_createTarget('welcome', _micKey, ContentAlign.top, scripts[0]));
-    // 2. Camera + Viewport
-    targets.add(_createTarget('camera', _micKey, ContentAlign.top, scripts[1])); 
-    // 3. Main Orb details
-    targets.add(_createTarget('mic', _micKey, ContentAlign.top, scripts[2]));
-    // 4. Flash
-    targets.add(_createTarget('flash', _flashKey, ContentAlign.top, scripts[3]));
-    // 5. Flip
-    targets.add(_createTarget('flip', _flipKey, ContentAlign.top, scripts[4]));
-    // 6. History
-    targets.add(_createTarget('history', _micKey, ContentAlign.top, scripts[5])); // explain history tab
-    // 7. Conversation
-    targets.add(_createTarget('conversation', _micKey, ContentAlign.top, scripts[6])); // explain conversation flow
-    // 8. Finish
-    targets.add(_createTarget('finish', _micKey, ContentAlign.top, scripts[7]));
-
-    TutorialCoachMark(
-      targets: targets,
-      colorShadow: Colors.black,
-      opacityShadow: 0.9,
-      textSkip: "SKIP",
-      onFinish: () => _tts.stop(),
-      onClickOverlay: (target) {
-         // Optionally block clicks outside orb if needed, but user didn't specify.
-      },
-    ).show(context: context);
-  }
-
-  int _lastPlayedStepIndex = -1;
-
-  TargetFocus _createTarget(String id, GlobalKey key, ContentAlign align, TutorialScript script) {
-    return TargetFocus(
-      identify: id,
-      keyTarget: key,
-      alignSkip: Alignment.topRight,
-      radius: 20,
-      contents: [
-        TargetContent(
-          align: align,
-          builder: (context, controller) {
-            final idx = TutorialScript.scripts.indexWhere((s) => s.stepName == id);
-            // Only play if this is a new step being shown
-            if (_lastPlayedStepIndex != idx) {
-              _lastPlayedStepIndex = idx;
-              _playTutorialStep(idx);
-            }
-            return _TutorialOrbController(
-              onRepeat: () => _playTutorialStep(idx),
-              onNext: () {
-                if (id == 'finish') {
-                   controller.skip();
-                } else {
-                   controller.next();
-                }
+  Widget _buildCameraErrorState() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.videocam_off_rounded, color: Colors.white38, size: 64),
+          const SizedBox(height: 24),
+          SizedBox(
+            width: 72,
+            height: 72,
+            child: FilledButton(
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                setState(() => _cameraError = false);
+                _init();
               },
-            );
-          },
-        ),
-      ],
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF5FA6A6),
+                shape: const CircleBorder(),
+              ),
+              child: const Icon(Icons.refresh_rounded, size: 36, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -423,191 +367,158 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final cam = _camera;
     final cs = Theme.of(context).colorScheme;
+    final bool cameraReady = cam != null && cam.value.isInitialized;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: cam == null || !cam.value.isInitialized
-          ? const Center(child: CircularProgressIndicator())
-          : Stack(
-              fit: StackFit.expand,
-              children: [
-                CameraPreview(cam),
-                // Top watermark logo
-                Positioned(
-                  top: 0, left: 16, right: 16,
-                  child: SafeArea(
-                    child: Row(
-                      children: [
-                        Opacity(
-                          opacity: 0.8,
-                          child: Image.asset(
-                            'assets/Images/Jansahayak_logo.png',
-                            height: 50,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        const Spacer(),
-                        IconButton.filledTonal(
-                          onPressed: _startTutorial,
-                          icon: const Icon(Icons.help_outline_rounded, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Bottom controls
-                Positioned(
-                  left: 0, right: 0, bottom: 22,
-                  child: SafeArea(
-                    child: Center(
-                      child: Card(
-                        color: cs.surface.withValues(alpha: 0.9),
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton.filledTonal(
-                                key: _flashKey,
-                                onPressed: _toggleFlash,
-                                icon: Icon(_flashMode == FlashMode.torch
-                                    ? Icons.flash_on_rounded
-                                    : Icons.flash_off_rounded),
+      body: _cameraError
+          ? _buildCameraErrorState()
+          : !cameraReady
+              ? const Center(child: CircularProgressIndicator())
+              : Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    CameraPreview(cam),
+                    Positioned(
+                      top: 0, left: 16, right: 16,
+                      child: SafeArea(
+                        child: Row(
+                          children: [
+                            Opacity(
+                              opacity: 0.8,
+                              child: Image.asset(
+                                'assets/Images/Jansahayak_logo.png',
+                                height: 50,
+                                fit: BoxFit.contain,
                               ),
-                              const SizedBox(width: 14),
-                              GestureDetector(
-                                key: _micKey,
-                                onLongPressStart: (_) => _onHoldStart(),
-                                onLongPressEnd: (_) => _onHoldEnd(),
-                                onLongPressCancel: _onHoldEnd,
-                                child: FloatingActionButton.large(
-                                  heroTag: 'hold-mic',
-                                  backgroundColor: _isRecording ? cs.error : cs.primary,
-                                  foregroundColor: cs.onPrimary,
-                                  onPressed: () {},
-                                  child: Icon(
-                                    _isRecording
-                                        ? Icons.graphic_eq_rounded
-                                        : Icons.mic_rounded,
-                                    size: 38,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 14),
-                              IconButton.filledTonal(
-                                key: _flipKey,
-                                onPressed: _flipCamera,
-                                icon: const Icon(Icons.flip_camera_ios_rounded),
-                              ),
-                            ],
-                          ),
+                            ),
+                            const Spacer(),
+                            IconButton.filledTonal(
+                              onPressed: _openTutorial,
+                              icon: const Icon(Icons.help_outline_rounded, color: Colors.white),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ),
-                // Live transcript / recording indicator
-                if (_isRecording || _liveTranscript.isNotEmpty)
-                  Positioned(
-                    left: 0, right: 0, bottom: 136,
-                    child: Center(
-                      child: Card(
-                        color: cs.surface.withValues(alpha: 0.9),
-                        elevation: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                _isRecording
-                                    ? Icons.graphic_eq_rounded
-                                    : Icons.mic_none_rounded,
-                                color: cs.primary,
-                                size: 24,
-                              ),
-                              if (_liveTranscript.isNotEmpty) ...[
-                                const SizedBox(width: 10),
-                                ConstrainedBox(
-                                  constraints: const BoxConstraints(maxWidth: 240),
-                                  child: Text(
-                                    _liveTranscript,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: cs.onSurface,
-                                      fontWeight: FontWeight.w500,
+                    Positioned(
+                      left: 0, right: 0, bottom: 22,
+                      child: SafeArea(
+                        child: Center(
+                          child: Card(
+                            color: cs.surface.withValues(alpha: 0.9),
+                            elevation: 8,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton.filledTonal(
+                                    onPressed: _toggleFlash,
+                                    icon: Icon(_flashMode == FlashMode.torch
+                                        ? Icons.flash_on_rounded
+                                        : Icons.flash_off_rounded),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  GestureDetector(
+                                    onLongPressStart: (_) => _onHoldStart(),
+                                    onLongPressEnd: (_) => _onHoldEnd(),
+                                    onLongPressCancel: _onHoldEnd,
+                                    child: FloatingActionButton.large(
+                                      heroTag: 'hold-mic',
+                                      backgroundColor: _isRecording ? cs.error : cs.primary,
+                                      foregroundColor: cs.onPrimary,
+                                      onPressed: () {},
+                                      child: Icon(
+                                        _isRecording
+                                            ? Icons.graphic_eq_rounded
+                                            : Icons.mic_rounded,
+                                        size: 38,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ],
+                                  const SizedBox(width: 14),
+                                  IconButton.filledTonal(
+                                    onPressed: _flipCamera,
+                                    icon: const Icon(Icons.flip_camera_ios_rounded),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                // Processing overlay (shown while Azure transcribes)
-                if (_isBusy)
-                  Container(
-                    color: Colors.black38,
-                    child: const Center(child: CircularProgressIndicator()),
-                  ),
-              ],
-            ),
-    );
-  }
-}
-
-class _TutorialOrbController extends StatelessWidget {
-  final VoidCallback onRepeat;
-  final VoidCallback onNext;
-
-  const _TutorialOrbController({required this.onRepeat, required this.onNext});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 20),
-        GestureDetector(
-          onTap: onRepeat,
-          onDoubleTap: onNext,
-          child: Container(
-            width: 130,
-            height: 130,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [Color(0xFF00FFD1), Color(0xFF00ADB5)],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.cyanAccent,
-                  blurRadius: 20,
-                  spreadRadius: 2,
+                    if (_isRecording || _liveTranscript.isNotEmpty)
+                      Positioned(
+                        left: 0, right: 0, bottom: 136,
+                        child: Center(
+                          child: Card(
+                            color: cs.surface.withValues(alpha: 0.9),
+                            elevation: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    _isRecording
+                                        ? Icons.graphic_eq_rounded
+                                        : Icons.mic_none_rounded,
+                                    color: cs.primary,
+                                    size: 24,
+                                  ),
+                                  if (_liveTranscript.isNotEmpty) ...[
+                                    const SizedBox(width: 10),
+                                    ConstrainedBox(
+                                      constraints: const BoxConstraints(maxWidth: 240),
+                                      child: Text(
+                                        _liveTranscript,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: cs.onSurface,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (_isBusy)
+                      Container(
+                        color: Colors.black54,
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const CircularProgressIndicator(),
+                              const SizedBox(height: 24),
+                              SizedBox(
+                                width: 56,
+                                height: 56,
+                                child: IconButton.filled(
+                                  onPressed: _cancelBusy,
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                  icon: const Icon(Icons.close_rounded, size: 30, color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
-              ],
-            ),
-            child: const Icon(
-              Icons.graphic_eq_rounded,
-              size: 60,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          '1: Repeat | 2: Next',
-          style: TextStyle(color: Colors.white54, fontSize: 12, letterSpacing: 1.5),
-        ),
-      ],
     );
   }
 }
+

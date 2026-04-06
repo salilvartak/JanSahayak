@@ -22,7 +22,7 @@ class ApiService {
     BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 180),
+      receiveTimeout: const Duration(seconds: 300),
     ),
   );
 

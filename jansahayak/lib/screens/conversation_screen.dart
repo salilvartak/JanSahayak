@@ -232,13 +232,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
     } catch (e, st) {
       debugPrint('[ConversationScreen] _runAnnotation error: $e\n$st');
       if (!mounted) return;
+      HapticFeedback.vibrate();
       setState(() {
         _processing = false;
-        _chat.add(_ChatEntry.text('Something went wrong. Try again.', false));
+        _chat.add(_ChatEntry.error());
         _turns.add(
           ConversationTurn(
             role: 'assistant',
-            text: 'Something went wrong. Try again.',
+            text: '[error]',
             createdAt: DateTime.now(),
           ),
         );
@@ -320,16 +321,16 @@ class _ConversationScreenState extends State<ConversationScreen> {
       );
       await _saveHistory();
       HapticFeedback.selectionClick();
-    } catch (_) {
+    } catch (e) {
       HapticFeedback.vibrate();
       if (!mounted) return;
       setState(() {
         _processing = false;
-        _chat.add(_ChatEntry.text('Unable to process this request.', false));
+        _chat.add(_ChatEntry.error());
         _turns.add(
           ConversationTurn(
             role: 'assistant',
-            text: 'Unable to process this request.',
+            text: '[error]',
             createdAt: DateTime.now(),
           ),
         );
@@ -413,12 +414,12 @@ class _ConversationScreenState extends State<ConversationScreen> {
   Future<void> _endMicHold() async {
     final wasListening = _listening;
     _startVoiceInputPending = false;
-    
-    if (!_listening) {
+
+    if (!wasListening) {
       if (mounted) setState(() => _listening = false);
       return;
     }
-    
+
     try {
       final audioPath = await _recorder.stop();
       if (mounted) {
@@ -430,9 +431,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         });
       }
 
-      if (wasListening) {
-        HapticFeedback.mediumImpact();
-      }
+      HapticFeedback.mediumImpact();
 
       if (audioPath != null) {
         await _stopVoiceInput(preRecordedPath: audioPath, autoSend: true);
@@ -448,19 +447,22 @@ class _ConversationScreenState extends State<ConversationScreen> {
     }
   }
 
+  DateTime? _cameraMicDownTime;
+
   Future<void> _beginCameraMicHold() async {
     if (_processing || _transcribing || _listening || _cameraFlowActive) return;
+    _cameraMicDownTime = DateTime.now();
     _startVoiceInputPending = true;
     HapticFeedback.lightImpact();
     await _tts.stop();
-    await Future.delayed(const Duration(milliseconds: 100)); // slightly reduced
+    await Future.delayed(const Duration(milliseconds: 100));
 
     if (!_startVoiceInputPending) return;
 
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       await _initCamera();
     }
-    
+
     if (mounted) {
       setState(() {
         _cameraFlowActive = true;
@@ -473,9 +475,20 @@ class _ConversationScreenState extends State<ConversationScreen> {
     final wasActive = _cameraFlowActive;
     final wasListening = _listening;
     _startVoiceInputPending = false;
-    
-    if (!wasActive) return;
-    
+
+    // If the flow never started (quick tap before async setup finished),
+    // fall back to a simple snap-and-send with a default query.
+    if (!wasActive) {
+      final downTime = _cameraMicDownTime;
+      _cameraMicDownTime = null;
+      if (downTime != null) {
+        await _quickCameraCapture();
+      }
+      return;
+    }
+
+    _cameraMicDownTime = null;
+
     String? audioPath;
     if (wasListening) {
       try {
@@ -494,7 +507,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
         }
       });
     }
-    
+
     if (_cameraController != null && _cameraController!.value.isInitialized) {
       try {
         HapticFeedback.heavyImpact();
@@ -504,17 +517,48 @@ class _ConversationScreenState extends State<ConversationScreen> {
         debugPrint('[ConvScreen] Error taking picture: $e');
       }
     }
-    
+
     if (audioPath != null) {
       await _stopVoiceInput(preRecordedPath: audioPath, autoSend: true);
     } else {
-      if (mounted) {
+      // No audio captured — send with the photo and a default query
+      if (_selectedImageForNextTurn != null) {
         setState(() {
           _listening = false;
           _cameraFlowActive = false;
           _transcribing = false;
         });
+        await _runFollowUp('Describe what you see');
+      } else {
+        if (mounted) {
+          setState(() {
+            _listening = false;
+            _cameraFlowActive = false;
+            _transcribing = false;
+          });
+        }
       }
+    }
+  }
+
+  Future<void> _quickCameraCapture() async {
+    if (_processing || _transcribing) return;
+
+    if (_cameraController == null || !_cameraController!.value.isInitialized) {
+      await _initCamera();
+    }
+    if (_cameraController == null || !_cameraController!.value.isInitialized) {
+      return;
+    }
+
+    HapticFeedback.heavyImpact();
+    try {
+      final image = await _cameraController!.takePicture();
+      _selectedImageForNextTurn = File(image.path);
+      if (mounted) setState(() {});
+      await _runFollowUp('Describe what you see');
+    } catch (e) {
+      debugPrint('[ConvScreen] Quick capture error: $e');
     }
   }
 
@@ -658,6 +702,9 @@ class _ConversationScreenState extends State<ConversationScreen> {
                   itemBuilder: (_, i) {
                     if (i >= _chat.length) return _processingBubble();
                     final item = _chat[i];
+                    if (item.kind == _ChatEntryKind.error) {
+                      return _errorBubble();
+                    }
                     if (item.kind == _ChatEntryKind.image) {
                       return _imageBubble(item);
                     }
@@ -818,8 +865,14 @@ class _ConversationScreenState extends State<ConversationScreen> {
                       ),
                       IconButton(
                         onPressed: () {
+                          HapticFeedback.heavyImpact();
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Content reported for review.')),
+                            const SnackBar(
+                              content: Icon(Icons.check_circle_rounded, color: Colors.white, size: 28),
+                              backgroundColor: Color(0xFF2E7D32),
+                              duration: Duration(seconds: 1),
+                              behavior: SnackBarBehavior.floating,
+                            ),
                           );
                         },
                         icon: const Icon(Icons.outlined_flag_rounded, color: Colors.white24, size: 20),
@@ -880,6 +933,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     HapticFeedback.lightImpact();
                     _runFollowUp(s);
                   },
+                  avatar: const Icon(Icons.play_arrow_rounded, size: 16, color: Color(0xFF5FA6A6)),
                   backgroundColor: const Color(0xFF0D1C21),
                   labelStyle: const TextStyle(
                     color: Color(0xFF5FA6A6),
@@ -900,30 +954,54 @@ class _ConversationScreenState extends State<ConversationScreen> {
 
   Widget _processingBubble() {
     final cs = Theme.of(context).colorScheme;
-    final statusText = _processing ? 'Processing...' : 'Detecting language...';
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: cs.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
         ),
+        child: const SizedBox(
+          width: 28,
+          height: 28,
+          child: CircularProgressIndicator(strokeWidth: 2.5),
+        ),
+      ),
+    );
+  }
+
+  Widget _errorBubble() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFF2D1515),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.redAccent.withValues(alpha: 0.3)),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(
-              width: 22,
-              height: 22,
-              child: CircularProgressIndicator(strokeWidth: 2),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              statusText,
-              style: TextStyle(
-                color: cs.onSurfaceVariant,
-                fontWeight: FontWeight.w600,
+            const Icon(Icons.warning_rounded, color: Colors.redAccent, size: 32),
+            const SizedBox(width: 12),
+            SizedBox(
+              width: 48,
+              height: 48,
+              child: IconButton.filled(
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  if (_lastResult == null && widget.initialImageFile != null) {
+                    _runAnnotate(widget.initialImageFile!, widget.initialQuery ?? 'Describe what you see', firstRun: true);
+                  }
+                },
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                ),
+                icon: const Icon(Icons.refresh_rounded, size: 26, color: Colors.white),
               ),
             ),
           ],
@@ -1012,7 +1090,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   }
 }
 
-enum _ChatEntryKind { text, image }
+enum _ChatEntryKind { text, image, error }
 
 class _ChatEntry {
   final _ChatEntryKind kind;
@@ -1035,6 +1113,11 @@ class _ChatEntry {
         kind: _ChatEntryKind.text,
         isUser: isUser,
         text: text,
+      );
+
+  factory _ChatEntry.error() => const _ChatEntry._(
+        kind: _ChatEntryKind.error,
+        isUser: false,
       );
 
   factory _ChatEntry.imageFromFile(File file, bool isUser) => _ChatEntry._(
