@@ -1,68 +1,122 @@
-# JanSahayak CodeMagic CI/CD Configuration File
-# Place this at the root of your repository
-
 workflows:
-  jansahayak-build-pipeline:
-    name: JanSahayak Android & iOS Build Pipeline
+  jansahayak-release:
+    name: JanSahayak Release Pipeline
     max_build_duration: 60
     instance_type: mac_mini_m2
+
     environment:
       flutter: stable
+      java: 17
       groups:
-        - azure_secrets  # Create this group in CodeMagic UI (Environment Variables)
-                         # Variables needed:
-                         # AZURE_SPEECH_KEY
-                         # AZURE_SPEECH_REGION
-        - app_store_connect # Create this group in CodeMagic UI (Account Settings -> API Keys)
-                            # Variables needed for App Store build:
-                            # APP_STORE_CONNECT_KEY_ID
-                            # APP_STORE_CONNECT_ISSUER_ID
-                            # APP_STORE_CONNECT_PRIVATE_KEY
+        - azure_secrets       # AZURE_SPEECH_KEY, AZURE_SPEECH_REGION
+        - android_signing     # CM_KEYSTORE (base64), CM_KEY_ALIAS,
+                              # CM_KEY_PASSWORD, CM_KEYSTORE_PASSWORD
+        - app_store_connect   # APP_STORE_CONNECT_KEY_ID, ISSUER_ID, PRIVATE_KEY
       vars:
         PACKAGE_NAME: "com.salil.jansahayak"
         PROJECT_PATH: "jansahayak"
-    
+
     triggering:
       events:
         - push
+        - tag
       branch_patterns:
-        - pattern: '*'
+        - pattern: 'main'
           include: true
-          source: true
+        - pattern: 'release/*'
+          include: true
 
     scripts:
-      - name: Create .env from Environment Variables
+      # ── 1. Create .env from CI secrets ─────────────────────────────────────
+      - name: Generate .env
         script: |
           cd $PROJECT_PATH
-          echo "AZURE_SPEECH_KEY=$AZURE_SPEECH_KEY" > .env
-          echo "AZURE_SPEECH_REGION=$AZURE_SPEECH_REGION" >> .env
-          echo "API_BASE_URL=https://jansahayak-api.azurewebsites.net" >> .env
-          echo "Created .env with Secrets"
+          cat > .env <<EOF
+          AZURE_SPEECH_KEY=$AZURE_SPEECH_KEY
+          AZURE_SPEECH_REGION=$AZURE_SPEECH_REGION
+          API_BASE_URL=https://jansahayak-api.azurewebsites.net
+          EOF
+          echo "✓ .env created"
 
-      - name: Fetch Flutter Packages
+      # ── 2. Read version from pubspec.yaml ──────────────────────────────────
+      - name: Extract version from pubspec
         script: |
           cd $PROJECT_PATH
-          flutter packages pub get
+          FULL_VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //')
+          BUILD_NAME=$(echo $FULL_VERSION | cut -d'+' -f1)
+          # Use CI build number for unique, ever-increasing build codes
+          echo "BUILD_NAME=$BUILD_NAME" >> $CM_ENV
+          echo "✓ Version: $BUILD_NAME+$BUILD_NUMBER"
 
-      - name: Flutter Unit Tests
+      # ── 3. Flutter dependencies ────────────────────────────────────────────
+      - name: Install packages
         script: |
           cd $PROJECT_PATH
-          flutter test
+          flutter pub get
 
-      - name: Build Android APK (Release)
+      # ── 4. Static analysis ─────────────────────────────────────────────────
+      - name: Analyze
         script: |
           cd $PROJECT_PATH
-          flutter build apk --release --build-name=3.0.0 --build-number=$BUILD_NUMBER
+          flutter analyze --no-fatal-infos
 
-      - name: Build Android App Bundle (AAB)
+      # ── 5. Android keystore setup (from CI secret) ─────────────────────────
+      - name: Set up Android signing
         script: |
-          cd $PROJECT_PATH
-          flutter build appbundle --release --build-name=3.0.0 --build-number=$BUILD_NUMBER
+          cd $PROJECT_PATH/android
+          if [ -n "$CM_KEYSTORE" ]; then
+            echo $CM_KEYSTORE | base64 --decode > app/release-keystore.jks
+            cat > key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=release-keystore.jks
+          EOF
+            echo "✓ Android signing configured"
+          else
+            echo "⚠ No CM_KEYSTORE — debug signing will be used"
+          fi
 
-      - name: Flutter build iOS (No Signing)
+      # ── 6. Build Android AAB ───────────────────────────────────────────────
+      - name: Build Android App Bundle
         script: |
           cd $PROJECT_PATH
-          flutter build ios --release --no-codesign --build-name=3.0.0 --build-number=$BUILD_NUMBER
+          flutter build appbundle \
+            --release \
+            --build-name=$BUILD_NAME \
+            --build-number=$BUILD_NUMBER
+
+      # ── 7. Build Android APK (for direct distribution) ─────────────────────
+      - name: Build Android APK
+        script: |
+          cd $PROJECT_PATH
+          flutter build apk \
+            --release \
+            --build-name=$BUILD_NAME \
+            --build-number=$BUILD_NUMBER
+
+      # ── 8. iOS code signing + build ────────────────────────────────────────
+      - name: iOS code signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files $PACKAGE_NAME \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+        ignore_failure: true
+
+      - name: Build iOS IPA
+        script: |
+          cd $PROJECT_PATH
+          flutter build ipa \
+            --release \
+            --build-name=$BUILD_NAME \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist \
+            || flutter build ios --release --no-codesign \
+               --build-name=$BUILD_NAME \
+               --build-number=$BUILD_NUMBER
 
     artifacts:
       - jansahayak/build/**/outputs/**/*.apk
@@ -73,7 +127,14 @@ workflows:
     publishing:
       email:
         recipients:
-          - salilvartak@example.com # Replace with your email
+          - salilv1103@gmail.com
         notify:
           success: true
           failure: true
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

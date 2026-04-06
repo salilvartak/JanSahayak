@@ -1,14 +1,27 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'config/env_config.dart';
 import 'screens/history_screen.dart';
 import 'screens/home_screen.dart';
 import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
+
+  // Load .env; gracefully degrade if file missing (e.g. first local run)
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (_) {
+    if (kDebugMode) debugPrint('[main] .env not found — using defaults');
+  }
+
+  EnvConfig.validate();
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -16,7 +29,21 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
-  runApp(const JanSahayakApp());
+
+  if (kReleaseMode) {
+    // In production, catch uncaught Flutter errors and suppress ugly red screens
+    FlutterError.onError = (details) {
+      FlutterError.presentError(details);
+    };
+    runZonedGuarded(
+      () => runApp(const JanSahayakApp()),
+      (error, stack) {
+        // Silently swallowed in production; hook crash reporting here
+      },
+    );
+  } else {
+    runApp(const JanSahayakApp());
+  }
 }
 
 class JanSahayakApp extends StatelessWidget {
